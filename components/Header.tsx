@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-
 enum TabId {
   home,
   WhatsBitstacker,
@@ -50,8 +49,6 @@ const HeaderItems = [
   },
 ];
 
-
-
 const Header = () => {
   const [showBgColor, setShowBgColor] = useState(false);
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.home);
@@ -71,13 +68,9 @@ const Header = () => {
     });
   }, []);
 
-
   return (
     <div
-      className={` text-[#F9F9F9] static duration-300 py-5 ${
-        showBgColor &&
-        "bg-[#030303] bg-opacity-60 backdrop-blur-xl	 fixed left-0 right-0 w-full top-0  z-50"
-      }`}
+      className={` text-[#F9F9F9] duration-300 py-5 fixed left-0 right-0 w-full top-0  bg-transparent z-50  bg-opacity-60 backdrop-blur-xl `}
     >
       <div className="max-w-[1356px] mx-auto flex  items-center justify-between">
         <div className="flex items-center cursor-pointer">
