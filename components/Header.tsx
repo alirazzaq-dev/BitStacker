@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+
 enum TabId {
   home,
   WhatsBitstacker,
@@ -49,6 +50,8 @@ const HeaderItems = [
   },
 ];
 
+
+
 const Header = () => {
   const [showBgColor, setShowBgColor] = useState(false);
   const [activeTabId, setActiveTabId] = useState<TabId>(TabId.home);
@@ -67,6 +70,7 @@ const Header = () => {
       }
     });
   }, []);
+
 
   return (
     <div

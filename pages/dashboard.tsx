@@ -10,8 +10,11 @@ import {
   SmallFooter,
 } from "../components";
 
+
 const Dashboard = () => {
+
   const [showModal, setShowModal] = useState(false);
+  
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = "hidden";
@@ -20,6 +23,8 @@ const Dashboard = () => {
     }
   }, [showModal]);
 
+  
+  
   return (
     <div className="relative">
       <div className="flex">

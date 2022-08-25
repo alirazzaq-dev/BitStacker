@@ -5,6 +5,17 @@ import Image from "next/image";
 import { useState } from "react";
 import { Navbar, Sidebar, SmallFooter } from "../components";
 import { ArrowLeft } from "../assets/icons";
+import { GetStaticProps } from "next";
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  return {
+    props: {
+      data: "SSG"
+    }
+  }
+}
+
+
 
 const Minting = () => {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);

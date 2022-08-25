@@ -2,6 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useLayoutEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { ethers } from "ethers";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { GetStaticProps } from "next";
 
 enum NavTabId {
   Home,
@@ -107,8 +111,13 @@ const NavItems = [
   },
 ];
 
+
 const Sidebar = () => {
+
+  
   const router = useRouter();
+  const { active, activate, deactivate, chainId, account, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  console.log("active: ", active);
 
   const [activeTab, setActiveTab] = useState<NavTabId>(NavTabId.Home);
 
@@ -127,6 +136,10 @@ const Sidebar = () => {
     } else if (href === "Mint") {
       router.push("/minting");
     }
+  };
+
+  const disconnect = async () => {
+    deactivate();
   };
 
   return (
@@ -161,17 +174,24 @@ const Sidebar = () => {
           ))}
         </nav>
 
-        <button className="border border-[#5761707A] rounded-lg flex items-center justify-center py-2 px-6">
-          <Image
-            alt="logout"
-            width={19}
-            height={16}
-            src={"/assets/icons/logout.svg"}
-          />
-          <span className="font-medium  text-base text-[#F6543E] ml-1">
-            Logout
-          </span>
-        </button>
+        {
+          active && (
+            <button
+              onClick={disconnect} 
+              className="border border-[#5761707A] rounded-lg flex items-center justify-center py-2 px-6">
+              <Image
+                alt="logout"
+                width={19}
+                height={16}
+                src={"/assets/icons/logout.svg"}
+              />
+              <span className="font-medium  text-base text-[#F6543E] ml-1">
+                Logout
+              </span>
+            </button>
+          )
+        }
+
       </div>
     </div>
   );

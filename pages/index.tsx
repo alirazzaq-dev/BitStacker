@@ -13,6 +13,17 @@ import {
   PayoutCycle,
   Graph,
 } from "../components";
+import { GetStaticProps } from 'next';
+
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  return {
+    props: {
+      data: "SSG"
+    }
+  }
+}
+
 
 const Home = () => {
   return (
