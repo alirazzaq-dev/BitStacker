@@ -1,0 +1,8 @@
+{
+    "name": "VIP Black",
+    "description": "MetaMiner.Club is a private, innovative cloud mining solution that utilizes NFTs as a perpetual smart contract & rewarding the members with Bitcoin. The VIP Black tier (by invitation only) is the highest and most exclusive tier.",
+    "image": "https://ipfs.io/ipfs/QmSwAXp74YmhZ5BLL8bLGnv25y7u16VC8FooSZXJ7YN4qi/0.png",
+    "properties": {
+        "Hashrate": "40 TH/s"
+    }
+}

@@ -1,0 +1,8 @@
+
+# dependencies
+node_modules
+typechain
+coverage
+artifacts
+cache
+.env
