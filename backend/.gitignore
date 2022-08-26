@@ -6,4 +6,4 @@ coverage
 artifacts
 cache
 .env
-deploy/
+deploy
