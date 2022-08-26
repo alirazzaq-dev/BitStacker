@@ -24,23 +24,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 interface Token {
-  hashRate: BigNumber
-  id: number
-  price: BigNumber 
-  terraHashedSold: BigNumber
+  hashRate: BigNumber;
+  id: number;
+  price: BigNumber;
+  terraHashedSold: BigNumber;
 }
 
 interface Tokens {
-  vipBlack :Token
-  vipBlue: Token
-  black: Token
-  blue: Token
+  vipBlack: Token;
+  vipBlue: Token;
+  black: Token;
+  blue: Token;
 }
 
 enum SaleTpe {
   CLOSED,
   PRIVATE,
-  PUBLIC
+  PUBLIC,
 }
 
 const injected = new InjectedConnector({
@@ -48,104 +48,127 @@ const injected = new InjectedConnector({
 });
 
 const Minting = () => {
-
-  const { active, activate, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  const {
+    active,
+    activate,
+    library: provider,
+  } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [hashAvailabe, setHashAvailable] = useState<string>("160,000");
   const [saleType, setSaleType] = useState<SaleTpe>(SaleTpe.CLOSED);
-  const [tokens, setTokens] = useState<Tokens>();  
+  const [tokens, setTokens] = useState<Tokens>();
   const [selectedToken, setSelectedToken] = useState<number>(1);
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState<{0: number, 1: number, 2: number, 3: number, 4: number }>();
-  const [addresses, setAddresses] = useState({bitcoin: "", email: ""})
+  const [price, setPrice] = useState<{
+    0: number;
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+  }>();
+  const [addresses, setAddresses] = useState({ bitcoin: "", email: "" });
   // const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   // const [selectedText, setSelectedText] = useState("Black");
-  
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [selectedText, setSelectedText] = useState("VIP Blue");
   const fetchContractDetails = async () => {
     if (provider) {
-      try{
-        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, provider) as BitStackerNFT;
+      try {
+        const contract = new Contract(
+          contractAddresses.BitStackerNFT,
+          abis.BitStackerNFT,
+          provider
+        ) as BitStackerNFT;
         const _available = contract.terrahashesAvailabe();
-        const _saleType = contract.saleType()
+        const _saleType = contract.saleType();
         const _vipBlack = contract.vipBlack();
         const _vipBlue = contract.vipBlue();
         const _black = contract.black();
         const _blue = contract.blue();
-  
+
         const [available, saleType, vipBlack, vipBlue, black, blue] =
-          await Promise.all([_available, _saleType, _vipBlack, _vipBlue, _black, _blue])
-  
+          await Promise.all([
+            _available,
+            _saleType,
+            _vipBlack,
+            _vipBlue,
+            _black,
+            _blue,
+          ]);
+
         console.log(" vipBlack ", vipBlack);
         console.log(" black ", black);
-  
-        setSaleType(saleType)
-        setTokens({ vipBlack, vipBlue, black, blue })
-        setHashAvailable(available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
+        setSaleType(saleType);
+        setTokens({ vipBlack, vipBlue, black, blue });
+        setHashAvailable(
+          available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        );
         const _price = {
           [0]: Number(ethers.utils.formatEther(vipBlack.price)),
           [1]: Number(ethers.utils.formatEther(vipBlue.price)),
           [2]: Number(ethers.utils.formatEther(black.price)),
           [3]: Number(ethers.utils.formatEther(blue.price)),
-          [4]: Number(ethers.utils.formatEther("0"))
-        }
-        setPrice(_price)
-      }
-      catch(e){
+          [4]: Number(ethers.utils.formatEther("0")),
+        };
+        setPrice(_price);
+      } catch (e) {
         console.error(e);
       }
     }
-  }
+  };
 
   const handleQuantity = (type: "increase" | "decrease") => {
     if (type === "increase") {
       setQuantity(quantity + 1);
-    }
-    else {
+    } else {
       if (quantity > 0) {
         setQuantity(quantity - 1);
       }
     }
+  };
 
-  } 
-
-  const handleAddresses = (val: string, type: "bitcoin"|"email") => {
-    if(type === "bitcoin"){
-      setAddresses((e) => ({...e, bitcoin: val}))
+  const handleAddresses = (val: string, type: "bitcoin" | "email") => {
+    if (type === "bitcoin") {
+      setAddresses((e) => ({ ...e, bitcoin: val }));
+    } else {
+      setAddresses((e) => ({ ...e, email: val }));
     }
-    else{
-      setAddresses((e) => ({...e, email: val}))
-    }
-  }
+  };
 
   const handleMint = async () => {
     if (provider) {
       try {
         const signer = provider.getSigner();
-        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
-        const value = (quantity * price[selectedToken as (0 | 1 | 2 | 3)]).toFixed(4)
-        console.log("value: ", value)
-        console.log("selectedToken: ", selectedToken)
+        const contract = new Contract(
+          contractAddresses.BitStackerNFT,
+          abis.BitStackerNFT,
+          signer
+        ) as BitStackerNFT;
+        const value = (
+          quantity * price[selectedToken as 0 | 1 | 2 | 3]
+        ).toFixed(4);
+        console.log("value: ", value);
+        console.log("selectedToken: ", selectedToken);
         if (addresses.bitcoin && addresses.email) {
-          const tx = await contract.mint(selectedToken, quantity, "", "", { value: ethers.utils.parseEther(value) });
+          const tx = await contract.mint(selectedToken, quantity, "", "", {
+            value: ethers.utils.parseEther(value),
+          });
           await tx.wait(1);
           fetchContractDetails();
-        }
-        else {
+        } else {
           alert("Please fill in your BitCoin and Email address before minting");
         }
       } catch (e) {
         console.error(e);
       }
+    } else {
+      await activate(injected);
     }
-    else {
-      await activate(injected)
-    }
-  }
-
-
+  };
 
   useEffect(() => {
     fetchContractDetails();
-  }, [provider])
+  }, [provider]);
 
   return (
     <div className="flex bg-[#070503] min-h-screen">
@@ -163,17 +186,19 @@ const Minting = () => {
             </h3>
           </div>
 
-          <div className="flex justify-between">
-            <div>
+          <div className="flex ">
+            <div className="w-[400px]">
               <div className="flex items-end">
                 <h1
                   style={{ backgroundImage: "url('/assets/icons/curve.svg')" }}
                   className="font-bold text-[90px]  bg-no-repeat bg-right-bottom	"
                 >
-                  {
-                    (quantity * (price ? price[selectedToken as (0 | 1 | 2 | 3 | 4)] : selectedToken )).toFixed(2)
-                  }
-
+                  {(
+                    quantity *
+                    (price
+                      ? price[selectedToken as 0 | 1 | 2 | 3 | 4]
+                      : selectedToken)
+                  ).toFixed(2)}
                 </h1>
                 <p className="mb-8 font-light text-4xl ml-2">ETH</p>
               </div>
@@ -188,7 +213,7 @@ const Minting = () => {
                     onClick={() => handleQuantity("decrease")}
                   />
                 </div>
-                
+
                 <h2 className="font-light text-3xl mx-5">{quantity}</h2>
 
                 <div>
@@ -206,62 +231,59 @@ const Minting = () => {
                 Select quantity to mint
               </p>
 
-              <div className="my-12 flex ">
+              <div className="my-10 flex relative w-full ">
                 <h3 className="text-[#F3F3F3] font-normal text-2xl">
                   Select which tier to mint
                 </h3>
 
-                <select 
-                  name="tokenType" 
-                  id="tokenType" 
-                  style={{marginLeft: "20px", width:"100px", background: "transparent"}} 
+                {/* <select
+                  name="tokenType"
+                  id="tokenType"
+                  style={{
+                    marginLeft: "20px",
+                    width: "100px",
+                    background: "transparent",
+                  }}
                   defaultValue={selectedToken}
-                  onChange={(e)=> setSelectedToken(Number(e.target.value))}
-                  >
+                  onChange={(e) => setSelectedToken(Number(e.target.value))}
+                >
+                  <option value={0} style={{ background: "black" }}>
+                    VIP Black
+                  </option>
 
-                        <option value={0} style={{background: "black"}} >
-                          VIP Black
-                        </option>
-                        
-                        <option value={1} style={{background: "black"}} >
-                          VIP Blue
-                        </option>
-                        
-                        <option value={2} style={{background: "black"}}>
-                          Black
-                        </option>
-                        
-                        <option value={3} style={{background: "black"}}>
-                          Blue
-                        </option>                  
-                        
-                        <option value={4} style={{background: "black"}}>
-                          Closed
-                        </option>
+                  <option value={1} style={{ background: "black" }}>
+                    VIP Blue
+                  </option>
 
-                </select>
+                  <option value={2} style={{ background: "black" }}>
+                    Black
+                  </option>
 
-                {/* <div>
+                  <option value={3} style={{ background: "black" }}>
+                    Blue
+                  </option>
+
+                  <option value={4} style={{ background: "black" }}>
+                    Closed
+                  </option>
+                </select> */}
+
+                <div className="absolute top-0 right-0">
                   <div
-                    onClick={() => { setIsDropDownOpen(!isDropDownOpen);}}
-                    className={`${isDropDownOpen && ` bg-[#231F19] rounded-xl`} ml-1 cursor-pointer p-1 h-[72px]`} 
-                    >
-
+                    onClick={() => {
+                      setIsDropDownOpen(!isDropDownOpen);
+                    }}
+                    className={`${
+                      isDropDownOpen && ` bg-[#231F19] rounded-xl`
+                    } ml-1 cursor-pointer p-1 h-fit`}
+                  >
                     <div className="flex items-center">
                       <div
                         className={`${
-                          isDropDownOpen
-                            ? `${
-                                selectedText === "Black"
-                                  ? " bg-[#000000]"
-                                  : " bg-[#02B2F2]"
-                              } `
-                            : "bg-transparent border border-[#00000033]"
-                        } w-4 h-4 rounded-full flex items-center justify-center`}
-                      >
-                        <div className="bg-[#fff] w-1 h-1 rounded-full"></div>
-                      </div>
-                      <span className="font-bold text-2xl mx-3">
+                          isDropDownOpen ? " bg-[#000] " : " bg-[#fff]"
+                        }  w-3 h-3 rounded-full`}
+                      ></div>
+                      <span className="font-bold text-base mx-3">
                         {selectedText}
                       </span>
 
@@ -294,62 +316,98 @@ const Minting = () => {
                       </svg>
                     </div>
 
-                    {
-                    isDropDownOpen && (
-                      <div
-                        onClick={() => { setSelectedText( selectedText === "Black" ? "Blue" : "Black")}}
-                        className="flex items-center"
-                      >
-                        <div
-                          className={`${
-                            isDropDownOpen
-                              ? `${
-                                  selectedText === "Black"
-                                    ? " bg-[#02B2F2]"
-                                    : " bg-[#000000]"
-                                } `
-                              : "bg-transparent border border-[#00000033]"
-                          } w-4 h-4 rounded-full flex items-center justify-center`}
-                        >
-                          <div className="bg-[#fff] w-1 h-1 rounded-full"></div>
-                        </div>
-                        <span className="font-bold text-2xl mx-3">
-                          {selectedText === "Black" ? "Blue" : "Black"}
-                        </span>
+                    {isDropDownOpen && (
+                      <div className="flex flex-col my-1.5 ml-[10px]">
+                        {selectedText === "VIP Black" ? null : (
+                          <h3
+                            onClick={() => {
+                              setSelectedText("VIP Black");
+                              setSelectedToken(0);
+                            }}
+                            className="font-bold  text-sm mx-3 my-1"
+                          >
+                            VIP Black
+                          </h3>
+                        )}
+
+                        {selectedText === "VIP Blue" ? null : (
+                          <h3
+                            onClick={() => {
+                              setSelectedText("VIP Blue");
+                              setSelectedToken(1);
+                            }}
+                            className="font-bold  text-sm mx-3 my-1"
+                          >
+                            VIP Blue
+                          </h3>
+                        )}
+
+                        {selectedText === "Black" ? null : (
+                          <h3
+                            onClick={() => {
+                              setSelectedText("Black");
+                              setSelectedToken(2);
+                            }}
+                            className="font-bold  text-sm mx-3 my-1"
+                          >
+                            Black
+                          </h3>
+                        )}
+
+                        {selectedText === "Blue" ? null : (
+                          <h3
+                            onClick={() => {
+                              setSelectedText("Blue");
+                              setSelectedToken(3);
+                            }}
+                            className="font-bold  text-sm mx-3 my-1"
+                          >
+                            Blue
+                          </h3>
+                        )}
+                        {selectedText === "Closed" ? null : (
+                          <h3
+                            onClick={() => {
+                              setSelectedText("Closed");
+                              setSelectedToken(4);
+                            }}
+                            className="font-bold text-sm mx-3 my-1"
+                          >
+                            Closed
+                          </h3>
+                        )}
                       </div>
                     )}
                   </div>
-                </div> */}
-
-
+                </div>
               </div>
 
-              <div style={{ margin: "10px", width: "250px", background: "balck"  }}>
-                
+              <div className=" w-full">
                 <input
                   type="text"
-                  style={{ margin: "10px", width: "250px", color: "balck" }}
+                  className="bg-transparent  border-2  border-[#F7931B] rounded-full text-base outline-none px-4 py-2 w-full my-1 text-[#F79"
                   value={addresses.bitcoin}
                   defaultValue="Enter Your Bitcoin Address"
+                  placeholder="Enter Your Bitcoin Address"
                   onChange={(e) => handleAddresses(e.target.value, "bitcoin")}
                 />
 
                 <input
                   type="text"
-                  style={{ margin: "10px", width: "250px", color: "balck"  }}
+                  className="bg-transparent  border-2  border-[#F7931B] rounded-full text-base outline-none px-4 py-2 w-full my-1  text-[#F79"
                   value={addresses.email}
+                  placeholder="Enter Your Email Address"
                   defaultValue="Enter Your Email Address"
                   onChange={(e) => handleAddresses(e.target.value, "email")}
                 />
 
+                <button
+                  onClick={handleMint}
+                  className="bg-transparent text-[#F7931B] border-2 w-full my-1 text-base border-[#F7931B] rounded-full py-3 "
+                >
+                  Mint
+                </button>
               </div>
-
-              <button
-                onClick={handleMint} 
-                className="bg-transparent text-[#F7931B] border-2 border-[#F7931B] rounded-full py-5 px-32">
-                Mint
-              </button>
-
               <div className="flex items-center mt-11 justify-center">
                 <svg
                   width="24"
@@ -368,7 +426,7 @@ const Minting = () => {
               </div>
             </div>
 
-            <div>
+            <div className="flex-1">
               <div
                 className="relative bg-right-bottom	 bg-no-repeat"
                 style={{
