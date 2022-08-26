@@ -1,11 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import { InjectedConnector } from "@web3-react/injected-connector";
-import { GetStaticProps } from "next";
 
 enum NavTabId {
   Home,
@@ -121,7 +119,7 @@ const Sidebar = () => {
 
   const [activeTab, setActiveTab] = useState<NavTabId>(NavTabId.Home);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const { pathname } = router;
     if (pathname === "/minting") {
       setActiveTab(NavTabId.Mint);

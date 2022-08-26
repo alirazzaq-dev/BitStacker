@@ -102,6 +102,7 @@ const Navbar = () => {
             Connect Wallet
           </button>
         )}
+
       </div>
     </div>
   );

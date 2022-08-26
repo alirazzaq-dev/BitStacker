@@ -13,14 +13,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 const Dashboard = () => {
-  const {
-    active,
-    activate,
-    deactivate,
-    chainId,
-    account,
-    library: provider,
-  } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  const { active, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -56,6 +49,7 @@ const Dashboard = () => {
                   </h1>
                 </div>
               )}
+
             </div>
           </div>
           <div className="pt-2">
