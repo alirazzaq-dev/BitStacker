@@ -1,12 +1,19 @@
+import { useWeb3React } from "@web3-react/core";
+import { ethers } from "ethers";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 
-const Details = ({
-  setShowModal,
-}: {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-}) => {
+const Details = (
+  {
+    setShowModal }:
+    {
+      setShowModal: Dispatch<SetStateAction<boolean>>
+    }
+) => {
+
+  const { active, activate, deactivate, chainId, account, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
   return (
     <div className="flex space-x-5">
       <div className="flex-1 space-y-5">
@@ -22,7 +29,7 @@ const Details = ({
           <div className="ml-5">
             <h2 className="font-medium text-xl">Ethereum Wallet Address:</h2>
             <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-              0xsd5sds8d4d84sd6s4d6s5d4s65d46sd
+              {account}
             </p>
           </div>
         </div>
@@ -167,9 +174,8 @@ const Details = ({
             </svg>
 
             <div
-              className={`${
-                isDropDownOpen ? " block " : " hidden "
-              } absolute top-9 left-0 bg-[#000000] w-full p-2 rounded-lg space-y-1`}
+              className={`${isDropDownOpen ? " block " : " hidden "
+                } absolute top-9 left-0 bg-[#000000] w-full p-2 rounded-lg space-y-1`}
             >
               <h5
                 onClick={() => {
