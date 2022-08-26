@@ -121,10 +121,11 @@ const Minting = () => {
       try {
         const signer = provider.getSigner();
         const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
+        if (addresses.bitcoin && addresses.email && price) {
+
         const value = (quantity * price[selectedToken as (0 | 1 | 2 | 3)]).toFixed(4)
         console.log("value: ", value)
         console.log("selectedToken: ", selectedToken)
-        if (addresses.bitcoin && addresses.email) {
           const tx = await contract.mint(selectedToken, quantity, "", "", { value: ethers.utils.parseEther(value) });
           await tx.wait(1);
           fetchContractDetails();
