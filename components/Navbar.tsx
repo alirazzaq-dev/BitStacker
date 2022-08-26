@@ -97,7 +97,12 @@ const Navbar = () => {
 
         {
           !active && (
-            <button onClick={connect}> Connect Wallet </button>
+            <button
+              className="rounded-lg border border-[#B4B4B4] py-2 px-4 font-normal text-base"
+              onClick={connect}
+            >
+              Connect Wallet
+            </button>
           )
         }
       </div>
