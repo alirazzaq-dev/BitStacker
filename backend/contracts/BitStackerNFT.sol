@@ -8,6 +8,8 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 
 /*
+
+
 - Updates in the contract:
     Add “bitcoin address” and “email address” inputs in the minting process
     On transferring a token, its bitcoin address and email address will reset
@@ -54,7 +56,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
     mapping (address => string) public bitCoinAddress;
     mapping (address => string) public emailAddress;
 
-    enum Category {VIPBLACK, VIPBLUE, BLACK, BLUE}
+    enum Category { VIPBLACK, VIPBLUE, BLACK, BLUE }
 
     struct Tokentype {
         uint8 id;
@@ -63,8 +65,9 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         uint terraHashedSold;
     }
 
-    bool public privateSale = false;
-    bool public publicSale = false;
+    enum SaleTpe { CLOSED, PRIVATE, PUBLIC }
+    SaleTpe public saleType = SaleTpe.CLOSED;
+    // bool public publicSale = false;
 
     constructor() ERC1155(""){}
     
@@ -75,12 +78,13 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         string memory _emailAddress
         ) payable public {
 
-        if(!privateSale && !publicSale) revert SALE_IS_NOT_LIVE();
+        if(saleType == SaleTpe.CLOSED) revert SALE_IS_NOT_LIVE();
 
-        if(privateSale){
-            if(_category != Category.VIPBLACK && _category != Category.VIPBLUE){
-                revert MINT_ONLY_VIP_TOKENS();
-            }
+        if(saleType == SaleTpe.PRIVATE){
+
+            // if(_category != Category.VIPBLACK && _category != Category.VIPBLUE){
+            //     revert MINT_ONLY_VIP_TOKENS();
+            // }
 
 
             if(_category == Category.VIPBLACK){
@@ -93,7 +97,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 vipBlack.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
             }
-            else {
+            else if(_category == Category.VIPBLUE) {
                 uint totalCost = vipBlue.price * _amount;
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = vipBlue.hashRate * _amount;
@@ -103,14 +107,18 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 vipBlue.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
             }
+            else {
+                revert MINT_ONLY_VIP_TOKENS();
+            }
 
 
         }
-        else {
+        else if(saleType == SaleTpe.PUBLIC){
+        // else if () {
 
-            if(_category != Category.BLACK && _category != Category.BLUE){
-                revert MINT_ONLY_NORMAL_TOKENS();
-            }
+            // if(_category != Category.BLACK && _category != Category.BLUE){
+            //     revert MINT_ONLY_NORMAL_TOKENS();
+            // }
 
             if(_category == Category.BLACK){
                 uint totalCost = black.price * _amount;
@@ -122,7 +130,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 black.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
             }
-            else {
+            else if(_category == Category.BLUE){
                 uint totalCost = blue.price * _amount;
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = blue.hashRate * _amount;
@@ -131,6 +139,9 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 }
                 blue.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
+            }
+            else {
+                revert MINT_ONLY_NORMAL_TOKENS();
             }
 
         }
@@ -146,6 +157,10 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
     function totalPublicsaleterraHashesSold() public view  returns(uint) {
         return black.terraHashedSold + blue.terraHashedSold;
+    }
+
+    function terrahashesAvailabe() public view returns(uint){
+        return (totalTerraHashes - (totalPresaleTerraHashesSold() + totalPublicsaleterraHashesSold()));
     }
 
     function uri(uint256 _tokenid) override public view returns (string memory) {
@@ -188,10 +203,9 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
     // Functions for administration
 
-    function setSaleType(bool _privateSale, bool _publicSale) public onlyOwner {
-        if(_privateSale == true && _publicSale == true) revert BOTH_CANT_BE_TRUE();
-        privateSale = _privateSale;
-        publicSale = _publicSale;
+    function setSaleType(SaleTpe _saleType) public onlyOwner {
+        saleType = _saleType;
+
     }
 
     function extendTerraHashes(uint _THForpresale, uint _THForPublicsale) public onlyOwner {
@@ -206,7 +220,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         if(balance == 0) revert NULL_BALANCE();
         (bool res1,) = payable(owner()).call{value: balance}("");
         if(!res1) revert UNABLE_TO_TRANSFER_FUNDS();
-        
     }
 
 
