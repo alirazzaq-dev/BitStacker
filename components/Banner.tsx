@@ -3,7 +3,7 @@ import Image from "next/image";
 const Banner = () => {
   return (
     <>
-      <div id="home" className="flex items-center my-14">
+      <div id="home" className="flex pt-36 mt-0 items-center my-14">
         <div className="max-w-[506px] pl-14 w-full">
           <h1
             style={{ backgroundImage: "url('/assets/icons/curve.svg')" }}

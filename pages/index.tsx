@@ -1,5 +1,5 @@
 // import type { NextPage } from "next";
-import React from 'react'
+import React from "react";
 
 import Image from "next/image";
 import {
@@ -13,17 +13,15 @@ import {
   PayoutCycle,
   Graph,
 } from "../components";
-import { GetStaticProps } from 'next';
-
+import { GetStaticProps } from "next";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
     props: {
-      data: "SSG"
-    }
-  }
-}
-
+      data: "SSG",
+    },
+  };
+};
 
 const Home = () => {
   return (
