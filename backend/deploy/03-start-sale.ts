@@ -29,66 +29,34 @@ module.exports = async ({getNamedAccounts, deployments}: HardhatRuntimeEnvironme
     await tx.wait(1);
     console.log("Private minting begin...")
 
-    // const StakingPoolFactory = await deployments.get("StakingPoolFactory");
-    // const stakingPoolFactory = new ethers.Contract(
-    //     StakingPoolFactory.address, 
-    //     StakingPoolFactory.abi, 
-    //     deployer
-    // ) as StakingPoolFactory;
 
-    
-    // // Start A pool
-    // const symbol = await stakingToken.symbol();
-    // const decimals = await stakingToken.decimals();
-    // const decimalsFactor = String(10**decimals);
-    // const tokens = ethers.BigNumber.from("1000000").mul(decimalsFactor)
-    // await stakingToken.mint(ethers.BigNumber.from("1000000").mul(decimalsFactor));
-    // await stakingToken.connect(user1).mint(ethers.BigNumber.from("1000000").mul(decimalsFactor));
-    // await stakingToken.mint(tokens);
-    // await stakingToken.approve(stakingPoolFactory.address, tokens);
-    
-    // let latestBlock = await ethers.provider.getBlock("latest");
-
-    // const tx = await stakingPoolFactory.createAStakingPool(
-    //     // projectInfo 
-    //     {
-    //       name: "Awesome Staking Pool",
-    //       symbol: "ASP",
-    //       token: stakingToken.address,
-    //       decimals: decimals,
-    //       tokenSymbol: symbol,
-    //       description: "The best project ever",
-    //       projectCover: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/c63a017911987.560b3fc509179.png",
-    //       projectAvatar: "https://nftstorage.link/ipfs/bafkreifuugv3zrchpoem6an34zryuaioak6pzon3kxizjt2yaclpol5vky",
-    //       socialHandles: {
-    //         twitter: "",
-    //         facebook: "",
-    //         telegram: "",
-    //         discord: ""
-    //       }
-    //     },
-    //     // rewardPoolInfo
-    //     {
-    //       startedAt: latestBlock.timestamp + 1 * ONE_MINUTE,
-    //       poolAmount: tokens,
-    //       minimum: ethers.utils.parseEther("100"),
-    //       maximum: ethers.utils.parseEther("1000000")
-    //     },
-    //     // images
-    //     {
-    //       image_3_months: "https://nftstorage.link/ipfs/bafkreifuugv3zrchpoem6an34zryuaioak6pzon3kxizjt2yaclpol5vky",
-    //       image_6_months: "https://nftstorage.link/ipfs/bafkreifuugv3zrchpoem6an34zryuaioak6pzon3kxizjt2yaclpol5vky",
-    //       image_12_months: "https://nftstorage.link/ipfs/bafkreifuugv3zrchpoem6an34zryuaioak6pzon3kxizjt2yaclpol5vky"
-    //     }
-    // );
+    const tx2 = await bitStackerNFT.mint(0, 10, {bitCoinAddress: "123456", emailAddress: "ali@gmail.com"}, 
+    {value: ethers.utils.parseEther("20")});
+    await tx2.wait(1);
 
 
-    // await tx.wait(1);
+    const tx3 = await bitStackerNFT.mint(1, 15, {bitCoinAddress: "123456", emailAddress: "ali@gmail.com"}, 
+    {value: ethers.utils.parseEther("20")});
+    await tx3.wait(1);
 
-    // console.log("STAKING pool has been created with token: ", stakingToken.address)
 
-    // const poolsByTokenAddress = await stakingPoolFactory.getPoolsByTokenAddress(stakingToken.address);
-    // console.log("poolsByTokenAddress: ", poolsByTokenAddress);
+    const tx0 = await bitStackerNFT.setSaleType(2);
+    await tx0.wait(1);
+
+
+    const tx4 = await bitStackerNFT.mint(2, 10, {bitCoinAddress: "123456", emailAddress: "ali@gmail.com"}, 
+    {value: ethers.utils.parseEther("20")});
+    await tx4.wait(1);
+
+
+    const tx5 = await bitStackerNFT.mint(3, 10, {bitCoinAddress: "123456", emailAddress: "ali@gmail.com"}, 
+    {value: ethers.utils.parseEther("20")});
+    await tx5.wait(1);
+
+
+    console.log("Tokens minted...")
+
+
 
 
   }

@@ -52,8 +52,12 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
     string public name = "BitStacker Tokens";
     string private baseURL = "https://ipfs.io/ipfs/QmXtQ3CdFaTMRFBAz36N47R8dhJ1REPKnxaGxaS47SxroA/";
 
-    mapping (address => string) public bitCoinAddress;
-    mapping (address => string) public emailAddress;
+    mapping (address => ContactInfo) public contactInfo;
+
+    struct ContactInfo {
+        string bitCoinAddress;
+        string emailAddress;
+    }
 
     enum Category { VIPBLACK, VIPBLUE, BLACK, BLUE }
 
@@ -73,8 +77,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
     function mint(
         Category _category, 
         uint256 _amount,
-        string memory _bitcoinAddress,
-        string memory _emailAddress
+        ContactInfo memory _contactInfo
         ) payable public {
 
         if(saleType == SaleTpe.CLOSED) revert SALE_IS_NOT_LIVE();
@@ -145,8 +148,9 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
         }
 
-        bitCoinAddress[msg.sender] = _bitcoinAddress;
-        emailAddress[msg.sender] = _emailAddress;
+        // bitCoinAddress[msg.sender] = _bitcoinAddress;
+        // emailAddress[msg.sender] = _emailAddress;
+        contactInfo[msg.sender] = _contactInfo;
 
     }
 
@@ -173,13 +177,8 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         );
     }
 
-
-    function resetPersonalData(
-        string memory _bitcoinAddress,
-        string memory _emailAddress
-    ) public {
-        bitCoinAddress[msg.sender] = _bitcoinAddress;
-        emailAddress[msg.sender] = _emailAddress;
+    function resetContactInfo(ContactInfo memory _contactInfo) public {
+        contactInfo[msg.sender] = _contactInfo;
     }
 
     function balancesOf(address user) public view returns(

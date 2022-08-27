@@ -85,6 +85,8 @@ const Minting = () => {
           [4]: Number(ethers.utils.formatEther("0"))
         }
         setPrice(_price)
+        console.log("_price: ", _price);
+
       }
       catch(e){
         console.error(e);
@@ -97,7 +99,7 @@ const Minting = () => {
       setQuantity(quantity + 1);
     }
     else {
-      if (quantity > 0) {
+      if (quantity > 1) {
         setQuantity(quantity - 1);
       }
     }
@@ -118,15 +120,16 @@ const Minting = () => {
       try {
         const signer = provider.getSigner();
         const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
-        if (addresses.bitcoin && addresses.email && price) {
 
-        const value = (quantity * price[selectedToken as (0 | 1 | 2 | 3)]).toFixed(4)
-        console.log("bitcoin: ", addresses.bitcoin)
-        console.log("email: ", addresses.email)
-        console.log("value: ", value)
-        console.log("selectedToken: ", selectedToken)
-        console.log("quantity: ", quantity)
-          const tx = await contract.mint(selectedToken, quantity, addresses.bitcoin, addresses.email, { value: ethers.utils.parseEther(value) });
+        if (addresses.bitcoin && addresses.email && price) {
+          const value = (quantity * price[selectedToken as (0 | 1 | 2 | 3)]).toFixed(4)
+          // console.log("selectedToken: ", selectedToken)
+          // console.log("quantity: ", quantity)
+          const tx = await contract.mint(
+            selectedToken,
+            quantity,
+            { bitCoinAddress: addresses.bitcoin, emailAddress: addresses.email },
+            { value: ethers.utils.parseEther(value) });
           await tx.wait(1);
           fetchContractDetails();
         }

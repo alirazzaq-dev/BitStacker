@@ -1,22 +1,112 @@
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract, ethers } from "ethers";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const Details = (
-  {
-    setShowModal }:
-    {
-      setShowModal: Dispatch<SetStateAction<boolean>>
-    }
-) => {
+import contractAddresses from "../utils/contractAddresses.json";
+import abis from "../utils/abis.json";
+import { BitStackerNFT } from "../types";
+
+interface Balances {
+  total: number;
+  black: string;
+  blue: string;
+  vipBlack: string;
+  vipBlue: string;
+}
+
+interface Hashes {
+  total: number;
+  blackHash: string;
+  blueHash: string;
+  vipBlackHash: string;
+  vipBlueHash: string;
+}
+
+
+const Details = () => {
 
   const { active, activate, deactivate, chainId, account, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
+  const [balances, setBalances] = useState<Balances>();
+  const [hashes, setHashes] = useState<Hashes>();
+  const [contactInfo, setContactInfo] = useState({bitCoinAddress: "", emailAddress: "" });
+
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [showModal]);
+
+
+
+  const fetchContractDetails = async () => {
+    if (provider && account) {
+      try {
+        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, provider) as BitStackerNFT;
+        const _userBalance = contract.balancesOf(account);
+        const _userHashes = contract.hashesOf(account);
+        const _contactInfo = contract.contactInfo(account);
+
+        const [userBalance, userHashes, contactInfoX] = await Promise.all([_userBalance, _userHashes, _contactInfo])
+        
+        setContactInfo(contactInfoX);
+
+        const balance = {
+          black: userBalance._black.toString(),
+          blue: userBalance._blue.toString(),
+          vipBlack: userBalance._vipBlack.toString(),
+          vipBlue: userBalance._vipBlue.toString()
+        }
+        const totalBalance = Number(balance.black) + Number(balance.blue) + Number(balance.vipBlack) + Number(balance.vipBlue);
+
+
+        const hashes = {
+          blackHash: userHashes._blackHash.toString(),
+          blueHash: userHashes._blueHash.toString(),
+          vipBlackHash: userHashes._vipBlackHash.toString(),
+          vipBlueHash: userHashes._vipBlueHash.toString()
+        }
+        const totalHashes = Number(hashes.blackHash) + Number(hashes.blueHash) + Number(hashes.vipBlackHash) + Number(hashes.vipBlueHash);
+
+        setBalances({ total: totalBalance, ...balance })
+        setHashes({ total: totalHashes, ...hashes })
+
+
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
+  const handleUpdateContact = async () => {
+    if(provider){
+      const signer = provider.getSigner();
+      const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
+
+      const tx = await contract.resetContactInfo({bitCoinAddress: "321321321", emailAddress: "new@fmailc.com"})
+      await tx.wait(1);
+
+      fetchContractDetails();
+      
+    }
+  }
+
+  useEffect(() => {
+    fetchContractDetails();
+  }, [provider])
+
   return (
     <div className="flex space-x-5">
       <div className="flex-1 space-y-5">
+
+
         <div className="rounded-3xl bg-[#121212] flex items-center py-5 px-6">
           <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
             <Image
@@ -26,6 +116,7 @@ const Details = (
               src="/assets/icons/etherum.svg"
             />
           </div>
+
           <div className="ml-5">
             <h2 className="font-medium text-xl">Ethereum Wallet Address:</h2>
             <p className="opacity-50 font-lighter text-2xl leading-[36px]">
@@ -33,6 +124,31 @@ const Details = (
             </p>
           </div>
         </div>
+
+
+        <div style={{border: "1px solid red"}}>
+          
+          <div className="ml-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <h2 className="font-medium text-xl">BitCoin Address:</h2>
+            <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+              {contactInfo.bitCoinAddress}
+            </p>
+          </div>
+
+          <div className="ml-5" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <h2 className="font-medium text-xl">Email Address:</h2>
+            <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+              {contactInfo.emailAddress}
+            </p>
+          </div>
+
+          <button onClick={handleUpdateContact}>Update</button>
+
+        </div>
+
+
+
+
 
         <div className="flex items-center space-x-5">
           <div className="rounded-3xl flex-1 bg-[#121212] flex items-center py-5 px-6">
@@ -99,7 +215,7 @@ const Details = (
             <div className="ml-5">
               <h2 className="font-medium text-xl">Total hashpower</h2>
               <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                2350
+                {hashes?.total}
               </p>
             </div>
           </div>
@@ -132,6 +248,7 @@ const Details = (
           </div>
         </div>
       </div>
+
       <div className="bg-[#121212] rounded-3xl px-5 py-3 max-w-[442px] w-full ">
         <div className="flex items-center justify-between">
           <h1 className="font-semibold text-xl">
@@ -195,6 +312,7 @@ const Details = (
               </h5>
             </div>
           </div>
+
         </div>
 
         <div className=" flex justify-center items-center my-4">
@@ -217,6 +335,70 @@ const Details = (
           </div>
         </div>
       </div>
+
+
+      {
+      showModal && (
+        <div className="fixed top-0 left-0 bg-[#121212] bg-opacity-40 w-full h-full flex items-center justify-center ">
+          <div className="bg-[#121212] max-w-[687px] mx-auto border w-full border-[#F7931B] border-opacity-40 rounded-3xl pt-5 pb-10 px-8 box-shadow">
+            <div className="flex items-center justify-between">
+
+              <h1 className="font-bold text-xl">
+                Withdraw <span className="text-[#F7931B]">Bitcoin</span>
+              </h1>
+
+              <div
+                onClick={() => {setShowModal(false)}}
+                className="bg-[#FF5B5B] cursor-pointer bg-opacity-5 rounded-full w-10 h-10 flex items-center justify-center"
+              >
+                <svg
+                  width="10"
+                  height="10"
+                  viewBox="0 0 10 10"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    opacity="0.8"
+                    d="M5.91615 4.99993L9.80995 8.89392C10.0634 9.14721 10.0634 9.55675 9.80995 9.81003C9.55667 10.0633 9.14714 10.0633 8.89386 9.81003L4.99994 5.91604L1.10614 9.81003C0.85274 10.0633 0.443335 10.0633 0.190051 9.81003C-0.0633505 9.55675 -0.0633505 9.14721 0.190051 8.89392L4.08385 4.99993L0.190051 1.10593C-0.0633505 0.852639 -0.0633505 0.443107 0.190051 0.189818C0.316278 0.0634708 0.482246 0 0.648097 0C0.813947 0 0.979797 0.0634708 1.10614 0.189818L4.99994 4.08382L8.89386 0.189818C9.0202 0.0634708 9.18605 0 9.3519 0C9.51775 0 9.6836 0.0634708 9.80995 0.189818C10.0634 0.443107 10.0634 0.852639 9.80995 1.10593L5.91615 4.99993Z"
+                    fill="#FF5B5B"
+                  />
+                </svg>
+
+              </div>
+            </div>
+
+            <form className="flex flex-col items-center mt-5">
+              <div className="w-full relative border border-[#595959] rounded-[50px] py-4 px-6 my-1">
+                <input
+                  className="w-full bg-transparent outline-none font-medium text-lg"
+                  placeholder="142"
+                />
+                <p className="absolute -top-4 left-7  font-light text-base px-1 bg-[#121212]">
+                  <span className="opacity-50">Withdrawal amount</span>
+                </p>
+              </div>
+              <div className="bg-[#0B0B0B] w-full rounded-[50px] py-4 px-6 my-1 border border-[#000000]">
+                <input
+                  className="w-full bg-transparent outline-none font-medium text-lg opacity-40"
+                  placeholder="Bitcoin Wallet address"
+                />
+              </div>
+              <div className="bg-[#0B0B0B] w-full rounded-[50px] py-4 px-6 my-1 border border-[#000000] flex items-center justify-between">
+                <input
+                  className="w-full bg-transparent outline-none font-medium text-lg opacity-40"
+                  placeholder="Bitcoin Wallet address"
+                />
+                <span className="opacity-30">optional</span>
+              </div>
+              <button className="bg-[#F7931B] py-4 mt-8 font-bold text-2xl px-20 rounded-[50px]">
+                Confirm
+              </button>
+            </form>
+
+          </div>
+        </div>
+      )}
     </div>
   );
 };

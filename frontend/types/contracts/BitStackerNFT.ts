@@ -28,6 +28,18 @@ import type {
   PromiseOrValue,
 } from "../common";
 
+export declare namespace BitStackerNFT {
+  export type ContactInfoStruct = {
+    bitCoinAddress: PromiseOrValue<string>;
+    emailAddress: PromiseOrValue<string>;
+  };
+
+  export type ContactInfoStructOutput = [string, string] & {
+    bitCoinAddress: string;
+    emailAddress: string;
+  };
+}
+
 export interface BitStackerNFTInterface extends utils.Interface {
   functions: {
     "THForPresale()": FunctionFragment;
@@ -35,19 +47,18 @@ export interface BitStackerNFTInterface extends utils.Interface {
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "balancesOf(address)": FunctionFragment;
-    "bitCoinAddress(address)": FunctionFragment;
     "black()": FunctionFragment;
     "blue()": FunctionFragment;
-    "emailAddress(address)": FunctionFragment;
+    "contactInfo(address)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
     "extendTerraHashes(uint256,uint256)": FunctionFragment;
     "hashesOf(address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(uint8,uint256,string,string)": FunctionFragment;
+    "mint(uint8,uint256,(string,string))": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "resetPersonalData(string,string)": FunctionFragment;
+    "resetContactInfo((string,string))": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "saleType()": FunctionFragment;
@@ -73,10 +84,9 @@ export interface BitStackerNFTInterface extends utils.Interface {
       | "balanceOf"
       | "balanceOfBatch"
       | "balancesOf"
-      | "bitCoinAddress"
       | "black"
       | "blue"
-      | "emailAddress"
+      | "contactInfo"
       | "exists"
       | "extendTerraHashes"
       | "hashesOf"
@@ -85,7 +95,7 @@ export interface BitStackerNFTInterface extends utils.Interface {
       | "name"
       | "owner"
       | "renounceOwnership"
-      | "resetPersonalData"
+      | "resetContactInfo"
       | "safeBatchTransferFrom"
       | "safeTransferFrom"
       | "saleType"
@@ -124,14 +134,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
     functionFragment: "balancesOf",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "bitCoinAddress",
-    values: [PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(functionFragment: "black", values?: undefined): string;
   encodeFunctionData(functionFragment: "blue", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "emailAddress",
+    functionFragment: "contactInfo",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -155,8 +161,7 @@ export interface BitStackerNFTInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>
+      BitStackerNFT.ContactInfoStruct
     ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
@@ -166,8 +171,8 @@ export interface BitStackerNFTInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "resetPersonalData",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+    functionFragment: "resetContactInfo",
+    values: [BitStackerNFT.ContactInfoStruct]
   ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
@@ -251,14 +256,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "balancesOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "bitCoinAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "black", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "blue", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "emailAddress",
+    functionFragment: "contactInfo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
@@ -279,7 +280,7 @@ export interface BitStackerNFTInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "resetPersonalData",
+    functionFragment: "resetContactInfo",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -465,11 +466,6 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
-    bitCoinAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     black(
       overrides?: CallOverrides
     ): Promise<
@@ -492,10 +488,12 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
-    emailAddress(
+    contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<
+      [string, string] & { bitCoinAddress: string; emailAddress: string }
+    >;
 
     exists(
       id: PromiseOrValue<BigNumberish>,
@@ -529,8 +527,7 @@ export interface BitStackerNFT extends BaseContract {
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -542,9 +539,8 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    resetPersonalData(
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+    resetContactInfo(
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -666,11 +662,6 @@ export interface BitStackerNFT extends BaseContract {
     }
   >;
 
-  bitCoinAddress(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   black(
     overrides?: CallOverrides
   ): Promise<
@@ -693,10 +684,12 @@ export interface BitStackerNFT extends BaseContract {
     }
   >;
 
-  emailAddress(
+  contactInfo(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<string>;
+  ): Promise<
+    [string, string] & { bitCoinAddress: string; emailAddress: string }
+  >;
 
   exists(
     id: PromiseOrValue<BigNumberish>,
@@ -730,8 +723,7 @@ export interface BitStackerNFT extends BaseContract {
   mint(
     _category: PromiseOrValue<BigNumberish>,
     _amount: PromiseOrValue<BigNumberish>,
-    _bitcoinAddress: PromiseOrValue<string>,
-    _emailAddress: PromiseOrValue<string>,
+    _contactInfo: BitStackerNFT.ContactInfoStruct,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -743,9 +735,8 @@ export interface BitStackerNFT extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  resetPersonalData(
-    _bitcoinAddress: PromiseOrValue<string>,
-    _emailAddress: PromiseOrValue<string>,
+  resetContactInfo(
+    _contactInfo: BitStackerNFT.ContactInfoStruct,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -863,11 +854,6 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
-    bitCoinAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     black(
       overrides?: CallOverrides
     ): Promise<
@@ -890,10 +876,12 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
-    emailAddress(
+    contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<
+      [string, string] & { bitCoinAddress: string; emailAddress: string }
+    >;
 
     exists(
       id: PromiseOrValue<BigNumberish>,
@@ -927,8 +915,7 @@ export interface BitStackerNFT extends BaseContract {
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -938,9 +925,8 @@ export interface BitStackerNFT extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    resetPersonalData(
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+    resetContactInfo(
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1110,16 +1096,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bitCoinAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     black(overrides?: CallOverrides): Promise<BigNumber>;
 
     blue(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emailAddress(
+    contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1149,8 +1130,7 @@ export interface BitStackerNFT extends BaseContract {
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1162,9 +1142,8 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    resetPersonalData(
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+    resetContactInfo(
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1260,16 +1239,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bitCoinAddress(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     black(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     blue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    emailAddress(
+    contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1299,8 +1273,7 @@ export interface BitStackerNFT extends BaseContract {
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1312,9 +1285,8 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    resetPersonalData(
-      _bitcoinAddress: PromiseOrValue<string>,
-      _emailAddress: PromiseOrValue<string>,
+    resetContactInfo(
+      _contactInfo: BitStackerNFT.ContactInfoStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
