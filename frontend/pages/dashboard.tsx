@@ -26,7 +26,7 @@ const Dashboard = () => {
             <div className="my-5 space-y-4">
               <Announcements />
 
-              {active && (
+              {true && (
                 <>
                   <Details/>
                   <Chart />

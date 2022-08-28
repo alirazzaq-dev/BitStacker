@@ -9,7 +9,7 @@ import { BitStackerNFT } from "../types";
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { Bitcoin, Chart, Etherum, Timer } from "../assets/icons";
+import { ArrowDown, Bitcoin, Chart, Corss, Etherum, Timer } from "../assets/icons";
 
 interface Balances {
   total: number;
@@ -267,33 +267,7 @@ const Details = () => {
             className="bg-[#000000] relative rounded-full flex items-center justify-center font-lighter text-xs px-4 py-2  cursor-pointer"
           >
             <span>Monthly</span>
-            <svg
-              width="8"
-              height="7"
-              viewBox="0 0 8 7"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g clipPath="url(#clip0_597_1310)">
-                <path
-                  d="M1.19976 2.32935L3.52908 4.65866L5.8584 2.32935"
-                  stroke="white"
-                  strokeWidth="0.873494"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_597_1310">
-                  <rect
-                    width="6.98795"
-                    height="6.98795"
-                    fill="white"
-                    transform="translate(7.02344) rotate(90)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
+            <ArrowDown />
 
             <div
               className={`${
@@ -351,19 +325,7 @@ const Details = () => {
                 }}
                 className="bg-[#FF5B5B] cursor-pointer bg-opacity-5 rounded-full w-10 h-10 flex items-center justify-center"
               >
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    opacity="0.8"
-                    d="M5.91615 4.99993L9.80995 8.89392C10.0634 9.14721 10.0634 9.55675 9.80995 9.81003C9.55667 10.0633 9.14714 10.0633 8.89386 9.81003L4.99994 5.91604L1.10614 9.81003C0.85274 10.0633 0.443335 10.0633 0.190051 9.81003C-0.0633505 9.55675 -0.0633505 9.14721 0.190051 8.89392L4.08385 4.99993L0.190051 1.10593C-0.0633505 0.852639 -0.0633505 0.443107 0.190051 0.189818C0.316278 0.0634708 0.482246 0 0.648097 0C0.813947 0 0.979797 0.0634708 1.10614 0.189818L4.99994 4.08382L8.89386 0.189818C9.0202 0.0634708 9.18605 0 9.3519 0C9.51775 0 9.6836 0.0634708 9.80995 0.189818C10.0634 0.443107 10.0634 0.852639 9.80995 1.10593L5.91615 4.99993Z"
-                    fill="#FF5B5B"
-                  />
-                </svg>
+                <Corss />
               </div>
             </div>
 
@@ -417,19 +379,7 @@ const Details = () => {
                 }}
                 className="bg-[#FF5B5B] cursor-pointer bg-opacity-5 rounded-full w-10 h-10 flex items-center justify-center"
               >
-                <svg
-                  width="10"
-                  height="10"
-                  viewBox="0 0 10 10"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    opacity="0.8"
-                    d="M5.91615 4.99993L9.80995 8.89392C10.0634 9.14721 10.0634 9.55675 9.80995 9.81003C9.55667 10.0633 9.14714 10.0633 8.89386 9.81003L4.99994 5.91604L1.10614 9.81003C0.85274 10.0633 0.443335 10.0633 0.190051 9.81003C-0.0633505 9.55675 -0.0633505 9.14721 0.190051 8.89392L4.08385 4.99993L0.190051 1.10593C-0.0633505 0.852639 -0.0633505 0.443107 0.190051 0.189818C0.316278 0.0634708 0.482246 0 0.648097 0C0.813947 0 0.979797 0.0634708 1.10614 0.189818L4.99994 4.08382L8.89386 0.189818C9.0202 0.0634708 9.18605 0 9.3519 0C9.51775 0 9.6836 0.0634708 9.80995 0.189818C10.0634 0.443107 10.0634 0.852639 9.80995 1.10593L5.91615 4.99993Z"
-                    fill="#FF5B5B"
-                  />
-                </svg>
+                <Corss />
               </div>
             </div>
 

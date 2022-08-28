@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight } from "../assets/icons";
 
 const Banner = () => {
   return (
@@ -22,33 +23,7 @@ const Banner = () => {
             <button className="rounded-lg flex items-center  font-normal text-xl py-3 px-7">
               Minting
               <span>
-                <svg
-                  width="52"
-                  height="12"
-                  viewBox="0 0 52 12"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M1 6H50M50 6L44 1.5M50 6L44 10.5"
-                    stroke="url(#paint0_linear_196_377)"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="paint0_linear_196_377"
-                      x1="1"
-                      y1="1.5"
-                      x2="47.3136"
-                      y2="1.5"
-                      gradientUnits="userSpaceOnUse"
-                    >
-                      <stop stopColor="white" stopOpacity="0" />
-                      <stop offset="1" stopColor="white" />
-                    </linearGradient>
-                  </defs>
-                </svg>
+                <ArrowRight />
               </span>
             </button>
           </div>
