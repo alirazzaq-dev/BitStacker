@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Tick } from "../assets/icons";
 
 const PayoutCycle = () => {
   return (
@@ -22,30 +23,15 @@ const PayoutCycle = () => {
               <h1 className="font-bold text-3xl">Day 1</h1>
               <div className="mt-5">
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">User mint NFT</p>
                 </div>
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">30-Day holding period starts</p>
                 </div>
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Commerce mining setup</p>
                 </div>
               </div>
@@ -61,21 +47,11 @@ const PayoutCycle = () => {
               <h1 className="font-bold text-3xl">Day 15</h1>
               <div className="mt-5">
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Mining setup complete</p>
                 </div>
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Start hashing for user</p>
                 </div>
               </div>
@@ -91,21 +67,11 @@ const PayoutCycle = () => {
               <h1 className="font-bold text-3xl">Day 30</h1>
               <div className="mt-5">
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Take snapshot of hloding wallets</p>
                 </div>
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Collect BTC wallets address on Discord</p>
                 </div>
               </div>
@@ -121,12 +87,7 @@ const PayoutCycle = () => {
               <h1 className="font-bold text-3xl">Day 45</h1>
               <div className="mt-5">
                 <div className="flex items-center">
-                  <Image
-                    alt="tick"
-                    width={10}
-                    height={9}
-                    src={"/assets/icons/tick.svg"}
-                  />
+                  <Tick />
                   <p className="ml-2">Payout to holders</p>
                 </div>
               </div>

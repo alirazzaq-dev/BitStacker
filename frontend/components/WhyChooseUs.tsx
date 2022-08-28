@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BottomLeft, SettingLock, TopRight } from "../assets/icons";
 
 const WhyChooseUs = () => {
   return (
@@ -33,21 +34,11 @@ const WhyChooseUs = () => {
           </div>
           <div className="bg-[#1B1B21] relative mx-8 transform -skew-x-12 flex flex-col items-center justify-center max-w-[369px] rounded-lg p-10">
             <div className="absolute top-1 right-1">
-              <Image
-                alt="topright"
-                width={36}
-                height={27}
-                src={"/assets/icons/topright.svg"}
-              />
+              <TopRight />
             </div>
 
             <div className="bg-[#F71B1B33] w-[69px] h-[69px] flex items-center justify-center  rounded-lg">
-              <Image
-                alt="setting-lock"
-                width={48}
-                height={41}
-                src={"/assets/icons/setting-lock.svg"}
-              />
+              <SettingLock />
             </div>
             <div className="mt-3 mb-2">
               <Image
@@ -66,22 +57,12 @@ const WhyChooseUs = () => {
               having the contract expire before achieving ROI
             </p>
             <div className="absolute bottom-0 left-0">
-              <Image
-                alt="bottomleft"
-                width={36}
-                height={27}
-                src={"/assets/icons/bottomleft.svg"}
-              />
+              <BottomLeft />
             </div>
           </div>
           <div className="relative bg-[#1B1B21] mx-8 transform -skew-x-12 flex flex-col items-center justify-center max-w-[369px] rounded-lg p-10">
             <div className="absolute top-1 right-1">
-              <Image
-                alt="topright"
-                width={36}
-                height={27}
-                src={"/assets/icons/topright.svg"}
-              />
+              <TopRight />
             </div>
             <div className="bg-[#F71B1B33] w-[69px] h-[69px] flex items-center justify-center  rounded-lg">
               <svg
@@ -145,12 +126,7 @@ const WhyChooseUs = () => {
               no way to exit without a loss
             </p>
             <div className="absolute bottom-0 left-0">
-              <Image
-                alt="bottomleft"
-                width={36}
-                height={27}
-                src={"/assets/icons/bottomleft.svg"}
-              />
+              <BottomLeft />
             </div>
           </div>
 
@@ -199,12 +175,7 @@ const WhyChooseUs = () => {
         >
           <div className="bg-[#1B1B21] relative mx-8 transform -skew-x-12 flex flex-col items-center justify-center max-w-[369px] rounded-lg p-10">
             <div className="absolute top-1 right-1">
-              <Image
-                alt="topright"
-                width={36}
-                height={27}
-                src={"/assets/icons/topright.svg"}
-              />
+              <TopRight />
             </div>
 
             <div className="bg-[#1BF73133] w-[69px] h-[69px] flex items-center justify-center  rounded-lg">
@@ -257,22 +228,12 @@ const WhyChooseUs = () => {
               NFT market.
             </p>
             <div className="absolute bottom-0 left-0">
-              <Image
-                alt="bottomleft"
-                width={36}
-                height={27}
-                src={"/assets/icons/bottomleft.svg"}
-              />
+              <BottomLeft />
             </div>
           </div>
           <div className="relative bg-[#1B1B21] mx-8 transform -skew-x-12 flex flex-col items-center justify-center max-w-[369px] rounded-lg p-10">
             <div className="absolute top-1 right-1">
-              <Image
-                alt="topright"
-                width={36}
-                height={27}
-                src={"/assets/icons/topright.svg"}
-              />
+              <TopRight />
             </div>
             <div className="bg-[#1BF73133] w-[69px] h-[69px] flex items-center justify-center  rounded-lg">
               <svg
@@ -310,12 +271,7 @@ const WhyChooseUs = () => {
               commitments into perpetuity.
             </p>
             <div className="absolute bottom-0 left-0">
-              <Image
-                alt="bottomleft"
-                width={36}
-                height={27}
-                src={"/assets/icons/bottomleft.svg"}
-              />
+              <BottomLeft />
             </div>
           </div>
 

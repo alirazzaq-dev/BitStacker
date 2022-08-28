@@ -1,14 +1,18 @@
+import React from "react";
+
 function ArrowLeft() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="44"
       height="14"
-      fill="#fff"
+      fill="none"
       viewBox="0 0 44 14"
     >
       <path
         stroke="url(#paint0_linear_340_1589)"
+        strokeLinecap="round"
+        strokeWidth="2"
         d="M43 7H2m0 0l8.87 6M2 7l8.87-6"
       ></path>
       <defs>
@@ -20,8 +24,8 @@ function ArrowLeft() {
           y2="7"
           gradientUnits="userSpaceOnUse"
         >
-          <stop></stop>
-          <stop offset="1"></stop>
+          <stop stopColor="#fff"></stop>
+          <stop offset="1" stopColor="#fff" stopOpacity="0"></stop>
         </linearGradient>
       </defs>
     </svg>

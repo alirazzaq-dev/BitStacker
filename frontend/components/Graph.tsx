@@ -1,23 +1,14 @@
 import Image from "next/image";
+import { TopLeft, TopRight } from "../assets/icons";
 
 const Graph = () => {
   return (
     <div id="graph" className="relative my-28 p-5">
       <div className="absolute left-0 top-0">
-        <Image
-          alt="topleft"
-          width={40}
-          height={36}
-          src={"/assets/icons/topleft.svg"}
-        />
+        <TopLeft />
       </div>
       <div className="absolute right-0 top-0">
-        <Image
-          alt="topright"
-          width={40}
-          height={36}
-          src={"/assets/icons/topright.svg"}
-        />
+        <TopRight />
       </div>
       <div className="flex justify-center relative">
         <div className="absolute -top-[30px]">

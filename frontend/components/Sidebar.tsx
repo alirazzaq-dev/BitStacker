@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
+import { Logout } from "../assets/icons";
 
 enum NavTabId {
   Home,
@@ -176,12 +177,7 @@ const Sidebar = () => {
             <button
               onClick={disconnect} 
               className="border border-[#5761707A] rounded-lg flex items-center justify-center py-2 px-6">
-              <Image
-                alt="logout"
-                width={19}
-                height={16}
-                src={"/assets/icons/logout.svg"}
-              />
+              <Logout />
               <span className="font-medium  text-base text-[#F6543E] ml-1">
                 Logout
               </span>

@@ -1,23 +1,14 @@
 import Image from "next/image";
+import { BottomLeft, BottomRight, TopLeft, TopRight } from "../assets/icons";
 
 const WhyBitStacker = () => {
   return (
     <div className="relative w-full p-10 my-60" id="WhatsBitstacker">
       <div className="absolute left-0 top-0">
-        <Image
-          alt="topleft"
-          width={40}
-          height={36}
-          src={"/assets/icons/topleft.svg"}
-        />
+        <TopLeft />
       </div>
       <div className="absolute right-0 top-0">
-        <Image
-          alt="topright"
-          width={40}
-          height={36}
-          src={"/assets/icons/topright.svg"}
-        />
+        <TopRight />
       </div>
 
       <div className="text-center">
@@ -61,20 +52,10 @@ const WhyBitStacker = () => {
         </div>
       </div>
       <div className="absolute left-0 bottom-0">
-        <Image
-          alt="bottomleft"
-          width={40}
-          height={36}
-          src={"/assets/icons/bottomleft.svg"}
-        />
+        <BottomLeft />
       </div>
       <div className="absolute right-0 bottom-0">
-        <Image
-          alt="bottomright"
-          width={40}
-          height={36}
-          src={"/assets/icons/bottomright.svg"}
-        />
+        <BottomRight />
       </div>
     </div>
   );

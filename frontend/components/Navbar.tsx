@@ -3,6 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
+import { Bell, Close, Etherum } from "../assets/icons";
 
 const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 31337],
@@ -58,12 +59,7 @@ const Navbar = () => {
         </h4>
 
         <div className="ml-10">
-          <Image
-            alt="close"
-            width={11}
-            height={13}
-            src={"/assets/icons/close.svg"}
-          />
+          <Close />>
         </div>
       </div>
 
@@ -74,21 +70,11 @@ const Navbar = () => {
             <>
               <div className="flex items-center relative">
                 <div className="bg-[#F5931B] w-2 h-2 rounded-full absolute top-0 right-0 z-50"></div>
-                <Image
-                  alt="bell"
-                  width={25}
-                  height={25}
-                  src={"/assets/icons/bell.svg"}
-                />
+                <Bell />
               </div>
 
               <div className="bg-[#121212] rounded-lg flex items-center px-3 py-2">
-                <Image
-                  alt="etherum"
-                  width={11}
-                  height={16}
-                  src={"/assets/icons/etherum.svg"}
-                />
+                <Etherum />
                 <span className="font-normal ml-2 text-base">{balance} ETH</span>
               </div>
             </>

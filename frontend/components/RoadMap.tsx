@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {ArrowRightDown} from "../assets/"
 
 const RoadMap = () => {
   return (

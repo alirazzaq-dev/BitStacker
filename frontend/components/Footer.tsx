@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Discord } from "../assets/icons";
 const FooterItems = [
   {
     text: "Home",
@@ -63,12 +64,7 @@ const Footer = () => {
         </div>
 
         <div className="mx-2">
-          <Image
-            alt="discord"
-            width={32}
-            height={24}
-            src={"/assets/icons/discord.svg"}
-          />
+          <Discord />
         </div>
 
         <div className="mx-2">

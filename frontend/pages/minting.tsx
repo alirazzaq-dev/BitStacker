@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { Navbar, Sidebar, SmallFooter } from "../components";
-import { ArrowLeft } from "../assets/icons";
+import { ArrowLeft, ArrowRight } from "../assets/icons";
 import { GetStaticProps } from "next";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber, Contract, ethers } from "ethers";
@@ -24,23 +24,23 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 interface Token {
-  hashRate: BigNumber
-  id: number
-  price: BigNumber 
-  terraHashedSold: BigNumber
+  hashRate: BigNumber;
+  id: number;
+  price: BigNumber;
+  terraHashedSold: BigNumber;
 }
 
 interface Tokens {
-  vipBlack :Token
-  vipBlue: Token
-  black: Token
-  blue: Token
+  vipBlack: Token;
+  vipBlue: Token;
+  black: Token;
+  blue: Token;
 }
 
 enum SaleTpe {
   CLOSED,
   PRIVATE,
-  PUBLIC
+  PUBLIC,
 }
 
 const injected = new InjectedConnector({
@@ -48,108 +48,131 @@ const injected = new InjectedConnector({
 });
 
 const Minting = () => {
-
-  const { active, activate, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  const {
+    active,
+    activate,
+    library: provider,
+  } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [hashAvailabe, setHashAvailable] = useState<string>("160,000");
   const [saleType, setSaleType] = useState<SaleTpe>(SaleTpe.CLOSED);
-  const [tokens, setTokens] = useState<Tokens>();  
+  const [tokens, setTokens] = useState<Tokens>();
   const [selectedToken, setSelectedToken] = useState<number>(1);
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState<{0: number, 1: number, 2: number, 3: number, 4: number }>();
-  const [addresses, setAddresses] = useState({bitcoin: "", email: ""})
+  const [price, setPrice] = useState<{
+    0: number;
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+  }>();
+  const [addresses, setAddresses] = useState({ bitcoin: "", email: "" });
   // const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   // const [selectedText, setSelectedText] = useState("Black");
-  
+
   const fetchContractDetails = async () => {
     if (provider) {
       try {
-        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, provider) as BitStackerNFT;
+        const contract = new Contract(
+          contractAddresses.BitStackerNFT,
+          abis.BitStackerNFT,
+          provider
+        ) as BitStackerNFT;
         const _available = contract.terrahashesAvailabe();
-        const _saleType = contract.saleType()
+        const _saleType = contract.saleType();
         const _vipBlack = contract.vipBlack();
         const _vipBlue = contract.vipBlue();
         const _black = contract.black();
         const _blue = contract.blue();
 
         const [available, saleType, vipBlack, vipBlue, black, blue] =
-          await Promise.all([_available, _saleType, _vipBlack, _vipBlue, _black, _blue])
+          await Promise.all([
+            _available,
+            _saleType,
+            _vipBlack,
+            _vipBlue,
+            _black,
+            _blue,
+          ]);
 
-        setSaleType(saleType)
-        setTokens({ vipBlack, vipBlue, black, blue })
-        setHashAvailable(available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+        setSaleType(saleType);
+        setTokens({ vipBlack, vipBlue, black, blue });
+        setHashAvailable(
+          available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        );
         const _price = {
           [0]: Number(ethers.utils.formatEther(vipBlack.price)),
           [1]: Number(ethers.utils.formatEther(vipBlue.price)),
           [2]: Number(ethers.utils.formatEther(black.price)),
           [3]: Number(ethers.utils.formatEther(blue.price)),
-          [4]: Number(ethers.utils.formatEther("0"))
-        }
-        setPrice(_price)
+          [4]: Number(ethers.utils.formatEther("0")),
+        };
+        setPrice(_price);
         console.log("_price: ", _price);
-
-      }
-      catch(e){
+      } catch (e) {
         console.error(e);
       }
     }
-  }
+  };
 
   const handleQuantity = (type: "increase" | "decrease") => {
     if (type === "increase") {
       setQuantity(quantity + 1);
-    }
-    else {
+    } else {
       if (quantity > 1) {
         setQuantity(quantity - 1);
       }
     }
+  };
 
-  } 
-
-  const handleAddresses = (val: string, type: "bitcoin"|"email") => {
-    if(type === "bitcoin"){
-      setAddresses((e) => ({...e, bitcoin: val}))
+  const handleAddresses = (val: string, type: "bitcoin" | "email") => {
+    if (type === "bitcoin") {
+      setAddresses((e) => ({ ...e, bitcoin: val }));
+    } else {
+      setAddresses((e) => ({ ...e, email: val }));
     }
-    else{
-      setAddresses((e) => ({...e, email: val}))
-    }
-  }
+  };
 
   const handleMint = async () => {
     if (provider) {
       try {
         const signer = provider.getSigner();
-        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
+        const contract = new Contract(
+          contractAddresses.BitStackerNFT,
+          abis.BitStackerNFT,
+          signer
+        ) as BitStackerNFT;
 
         if (addresses.bitcoin && addresses.email && price) {
-          const value = (quantity * price[selectedToken as (0 | 1 | 2 | 3)]).toFixed(4)
+          const value = (
+            quantity * price[selectedToken as 0 | 1 | 2 | 3]
+          ).toFixed(4);
           // console.log("selectedToken: ", selectedToken)
           // console.log("quantity: ", quantity)
           const tx = await contract.mint(
             selectedToken,
             quantity,
-            { bitCoinAddress: addresses.bitcoin, emailAddress: addresses.email },
-            { value: ethers.utils.parseEther(value) });
+            {
+              bitCoinAddress: addresses.bitcoin,
+              emailAddress: addresses.email,
+            },
+            { value: ethers.utils.parseEther(value) }
+          );
           await tx.wait(1);
           fetchContractDetails();
-        }
-        else {
+        } else {
           alert("Please fill in your BitCoin and Email address before minting");
         }
       } catch (e) {
         console.error(e);
       }
+    } else {
+      await activate(injected);
     }
-    else {
-      await activate(injected)
-    }
-  }
-
-
+  };
 
   useEffect(() => {
     fetchContractDetails();
-  }, [provider])
+  }, [provider]);
 
   return (
     <div className="flex bg-[#070503] min-h-screen">
@@ -174,35 +197,32 @@ const Minting = () => {
                   style={{ backgroundImage: "url('/assets/icons/curve.svg')" }}
                   className="font-bold text-[90px]  bg-no-repeat bg-right-bottom	"
                 >
-                  {
-                    (quantity * (price ? price[selectedToken as (0 | 1 | 2 | 3 | 4)] : selectedToken )).toFixed(2)
-                  }
-
+                  {(
+                    quantity *
+                    (price
+                      ? price[selectedToken as 0 | 1 | 2 | 3 | 4]
+                      : selectedToken)
+                  ).toFixed(2)}
                 </h1>
                 <p className="mb-8 font-light text-4xl ml-2">ETH</p>
               </div>
 
               <div className="flex my-5 items-center">
-                <div>
-                  <Image
+                <div onClick={() => handleQuantity("decrease")}>
+                  {/* <Image
                     alt="arrow-left"
                     width={41}
                     height={20}
                     src={"/assets/icons/arrow-left.svg"}
                     onClick={() => handleQuantity("decrease")}
-                  />
+                  /> */}
+                  <ArrowLeft />
                 </div>
-                
+
                 <h2 className="font-light text-3xl mx-5">{quantity}</h2>
 
-                <div>
-                  <Image
-                    alt="arrow-right"
-                    width={54}
-                    height={20}
-                    src={"/assets/icons/arrow-right.svg"}
-                    onClick={() => handleQuantity("increase")}
-                  />
+                <div onClick={() => handleQuantity("increase")}>
+                  <ArrowRight />
                 </div>
               </div>
 
@@ -211,38 +231,56 @@ const Minting = () => {
               </p>
 
               <div className="my-12 flex ">
-                <h3 className="text-[#F3F3F3] font-normal text-2xl">
+                <h3 className="text-[#F3F3F3] font-normal text-xl">
                   Select which tier to mint
                 </h3>
 
-                <select 
-                  name="tokenType" 
-                  id="tokenType" 
-                  style={{marginLeft: "20px", width:"100px", background: "transparent"}} 
+                <select
+                  name="tokenType"
+                  id="tokenType"
+                  className="ml-5 w-fit-content bg-transparent font-bold text-lg outline-none p-0"
                   defaultValue={selectedToken}
-                  onChange={(e)=> setSelectedToken(Number(e.target.value))}
+                  onChange={(e) => setSelectedToken(Number(e.target.value))}
+                >
+                  <option
+                    className="font-medium my-1 text-base"
+                    value={0}
+                    style={{ background: "black" }}
                   >
+                    VIP Black
+                  </option>
 
-                        <option value={0} style={{background: "black"}} >
-                          VIP Black
-                        </option>
-                        
-                        <option value={1} style={{background: "black"}} >
-                          VIP Blue
-                        </option>
-                        
-                        <option value={2} style={{background: "black"}}>
-                          Black
-                        </option>
-                        
-                        <option value={3} style={{background: "black"}}>
-                          Blue
-                        </option>                  
-                        
-                        <option value={4} style={{background: "black"}}>
-                          Closed
-                        </option>
+                  <option
+                    className="font-medium my-1 text-base"
+                    value={1}
+                    style={{ background: "black" }}
+                  >
+                    VIP Blue
+                  </option>
 
+                  <option
+                    className="font-medium my-1 text-base"
+                    value={2}
+                    style={{ background: "black" }}
+                  >
+                    Black
+                  </option>
+
+                  <option
+                    className="font-medium my-1 text-base"
+                    value={3}
+                    style={{ background: "black" }}
+                  >
+                    Blue
+                  </option>
+
+                  <option
+                    className="font-medium my-1 text-base"
+                    value={4}
+                    style={{ background: "black" }}
+                  >
+                    Closed
+                  </option>
                 </select>
 
                 {/* <div>
@@ -324,35 +362,31 @@ const Minting = () => {
                     )}
                   </div>
                 </div> */}
-
-
               </div>
 
-              <div style={{ margin: "10px", width: "250px", background: "balck"  }}>
-                
+              <div className="w-[400px]">
                 <input
                   type="text"
-                  style={{ margin: "10px", width: "250px", color: "balck" }}
+                  className="border border-[#F7931B] my-1 outline-none text-base bg-transparent rounded-full py-2 px-3 w-full"
+                  value={addresses.email}
+                  placeholder="Enter Your Email Address"
+                  onChange={(e) => handleAddresses(e.target.value, "email")}
+                />
+                <input
+                  type="text"
+                  className="border border-[#F7931B] my-1 outline-none text-base bg-transparent rounded-full py-2 px-3 w-full"
                   value={addresses.bitcoin}
-                  defaultValue="Enter Your Bitcoin Address"
+                  placeholder="Enter Your Bitcoin Address"
                   onChange={(e) => handleAddresses(e.target.value, "bitcoin")}
                 />
 
-                <input
-                  type="text"
-                  style={{ margin: "10px", width: "250px", color: "balck"  }}
-                  value={addresses.email}
-                  defaultValue="Enter Your Email Address"
-                  onChange={(e) => handleAddresses(e.target.value, "email")}
-                />
-
+                <button
+                  onClick={handleMint}
+                  className="bg-transparent text-[#F7931B] text-base mt-2 w-full border-2 border-[#F7931B] rounded-full py-5 px-32"
+                >
+                  Mint
+                </button>
               </div>
-
-              <button
-                onClick={handleMint} 
-                className="bg-transparent text-[#F7931B] border-2 border-[#F7931B] rounded-full py-5 px-32">
-                Mint
-              </button>
 
               <div className="flex items-center mt-11 justify-center">
                 <svg
@@ -372,7 +406,7 @@ const Minting = () => {
               </div>
             </div>
 
-            <div>
+            <div className="flex-1">
               <div
                 className="relative bg-right-bottom	 bg-no-repeat"
                 style={{
