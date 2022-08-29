@@ -1,24 +1,15 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity 0.8.9;
+
+
+/// @title	Bitstaker NFTs. 
+/// @author	Ali (alirazzaquet@mail.com)
+
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 // import "hardhat/console.sol";
-
-/*
-
-
-- Updates in the contract:
-    Add “bitcoin address” and “email address” inputs in the minting process
-    On transferring a token, its bitcoin address and email address will reset
-    Add functionality to update the bitcoin address and email address by the token owner
-
-- Updates in the front-end:
-    Users can request the withdrawal through signing a message with their wallet and we will send 
-    an encrypted message along with their tokenid, Ethereum address and bitcoin address to the admin.
-
-*/
 
 error SALE_IS_NOT_LIVE();
 error MINT_ONLY_VIP_TOKENS();
@@ -37,17 +28,17 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
     uint public totalTerraHashes = THForPresale + THForPublicsale;
 
     // Types of tokens  -> For Mainnet
-    Tokentype public vipBlack = Tokentype(0, 40, 2 ether, 0);
-    Tokentype public vipBlue = Tokentype(1, 4, 0.2 ether, 0);
-    Tokentype public black = Tokentype(2, 20, 1 ether, 0);
-    Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
+    // Tokentype public vipBlack = Tokentype(0, 40, 2 ether, 0);
+    // Tokentype public vipBlue = Tokentype(1, 4, 0.2 ether, 0);
+    // Tokentype public black = Tokentype(2, 20, 1 ether, 0);
+    // Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
 
 
     // Types of tokens  -> For Testnet
-    // Tokentype public vipBlack = Tokentype(0, 40, 0.00001 ether, 0);
-    // Tokentype public vipBlue = Tokentype(1, 4, 0.00001 ether, 0);
-    // Tokentype public black = Tokentype(2, 20, 0.00001 ether, 0);
-    // Tokentype public blue = Tokentype(3, 4, 0.00001 ether, 0);
+    Tokentype public vipBlack = Tokentype(0, 40, 0, 0);
+    Tokentype public vipBlue = Tokentype(1, 4, 0, 0);
+    Tokentype public black = Tokentype(2, 20, 0, 0);
+    Tokentype public blue = Tokentype(3, 4, 0, 0);
 
     string public name = "BitStacker Tokens";
     string private baseURL = "https://ipfs.io/ipfs/QmXtQ3CdFaTMRFBAz36N47R8dhJ1REPKnxaGxaS47SxroA/";
@@ -70,7 +61,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
     enum SaleTpe { CLOSED, PRIVATE, PUBLIC }
     SaleTpe public saleType = SaleTpe.CLOSED;
-    // bool public publicSale = false;
 
     constructor() ERC1155(""){}
     
@@ -83,11 +73,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         if(saleType == SaleTpe.CLOSED) revert SALE_IS_NOT_LIVE();
 
         if(saleType == SaleTpe.PRIVATE){
-
-            // if(_category != Category.VIPBLACK && _category != Category.VIPBLUE){
-            //     revert MINT_ONLY_VIP_TOKENS();
-            // }
-
 
             if(_category == Category.VIPBLACK){
                 uint totalCost = vipBlack.price * _amount;
@@ -116,11 +101,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
         }
         else if(saleType == SaleTpe.PUBLIC){
-        // else if () {
-
-            // if(_category != Category.BLACK && _category != Category.BLUE){
-            //     revert MINT_ONLY_NORMAL_TOKENS();
-            // }
 
             if(_category == Category.BLACK){
                 uint totalCost = black.price * _amount;
@@ -148,8 +128,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
         }
 
-        // bitCoinAddress[msg.sender] = _bitcoinAddress;
-        // emailAddress[msg.sender] = _emailAddress;
         contactInfo[msg.sender] = _contactInfo;
 
     }
@@ -199,7 +177,8 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         _blueHash = (balanceOf(user, 3))*blue.hashRate;
     }
 
-    // Functions for administration
+
+    /// @notice functions for administration
 
     function setSaleType(SaleTpe _saleType) public onlyOwner {
         saleType = _saleType;
@@ -211,7 +190,6 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         THForPublicsale = _THForPublicsale;
         totalTerraHashes = _THForpresale + _THForPublicsale;
     }
-
 
     function withdrawFunds() public onlyOwner {
         uint balance = address(this).balance;

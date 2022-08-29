@@ -8,13 +8,11 @@ const frontEndContractsFile = "../frontend/utils/contractAddresses.json"
 const frontEndAbiFile = "../frontend/utils/abis.json"
 
 module.exports = async () => {
-    if (process.env.UPDATE_FRONT_END) {
         console.log("")
         console.log("Writing to front end...")
         await updateContractAddresses()
         await updateAbi()
         console.log("Front end written!")
-    }
 }
 
 async function updateAbi() {

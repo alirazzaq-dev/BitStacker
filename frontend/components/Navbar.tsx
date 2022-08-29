@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
 import { Bell, Close, Etherum } from "../assets/icons";
+import contractData from "../utils/contractAddresses.json"
 
 const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 31337],
@@ -41,7 +42,16 @@ const Navbar = () => {
     }
   };
 
+  const checkCain = async () => {
+    if (chainId && chainId !== contractData.chainId) {
+      alert(`This App only works on chianid: ${contractData.chainId}. Please switch your chian`);
+      throw ("WRONG Chain")
+    }
+  }
+
+
   useEffect(() => {
+    checkCain();
     fetchEthBalance();
   }, [provider]);
 

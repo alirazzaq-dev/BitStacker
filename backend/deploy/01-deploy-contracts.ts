@@ -1,10 +1,10 @@
 import { ethers, network } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-// import {verify} from "../utils/verify"
+import {verify} from "../utils/verify"
 
-// function sleep(ms: number) {
-//     return new Promise(resolve => setTimeout(resolve, ms));
-//   }
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 module.exports = async ({ getNamedAccounts, deployments }: HardhatRuntimeEnvironment) => {
     const { deploy, log } = deployments
@@ -25,15 +25,15 @@ module.exports = async ({ getNamedAccounts, deployments }: HardhatRuntimeEnviron
     else {
         // deploying contract
 
-        // const BitStackerNFT = await deploy("BitStackerNFT", {
-        //     from: deployer,
-        //     args: [],
-        //     log: true,
-        // })
+        const BitStackerNFT = await deploy("BitStackerNFT", {
+            from: deployer,
+            args: [],
+            log: true,
+        })
 
-        // log("NftMarketplace contract deployed on testnet!")
-        // await sleep(5000);
-        // await verify(nftContract.address, [])
+        log("BitStackerNFT contract deployed on testnet!")
+        await sleep(5000);
+        await verify(BitStackerNFT.address, [])
         // await verify(NftMarketplaceContract.address, [])
     }
 

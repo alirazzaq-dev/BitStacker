@@ -418,10 +418,13 @@ const Minting = () => {
         </div>
         <SmallFooter />
 
+        <div style={{ margin: 10}}>
+        <div>For Testing</div>
         <div style={{ height: "10vh", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
           <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
           <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
           <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
+        </div>
         </div>
 
 

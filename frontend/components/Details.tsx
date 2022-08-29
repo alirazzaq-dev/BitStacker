@@ -124,43 +124,45 @@ const Details = () => {
   }
 
   const submitUpdatedContactInfo = async () => {   
-    const validEmail = ValidateEmail(updatedContactInfo.emailAddress);
-    if (!validEmail) {
-      alert("Invalid email address");
-      throw ("INVALID EMAIL")
-    }
-    const validbitcoin = ValidateBitcoinAddress(updatedContactInfo.bitCoinAddress);
-    if (!validbitcoin) {
-      alert("Invalid bitcoin address");
-      throw ("INVALID Bitcoin Address")
-    }
+    // const validEmail = ValidateEmail(updatedContactInfo.emailAddress);
+    // if (!validEmail) {
+    //   alert("Invalid email address");
+    //   throw ("INVALID EMAIL")
+    // }
+    // const validbitcoin = ValidateBitcoinAddress(updatedContactInfo.bitCoinAddress);
+    // if (!validbitcoin) {
+    //   alert("Invalid bitcoin address");
+    //   throw ("INVALID Bitcoin Address")
+    // }
 
-    if (provider && validEmail && validbitcoin) {
-      try{
-        const signer = provider.getSigner();
-        const contract = new Contract(
-          contractAddresses.BitStackerNFT,
-          abis.BitStackerNFT,
-          signer
-        ) as BitStackerNFT;
+    // if (provider && validEmail && validbitcoin) {
+    //   try{
+    //     const signer = provider.getSigner();
+    //     const contract = new Contract(
+    //       contractAddresses.BitStackerNFT,
+    //       abis.BitStackerNFT,
+    //       signer
+    //     ) as BitStackerNFT;
   
-        const tx = await contract.resetContactInfo({
-          bitCoinAddress: updatedContactInfo.bitCoinAddress,
-          emailAddress: updatedContactInfo.emailAddress,
-        });
-        await tx.wait(1);
+    //     const tx = await contract.resetContactInfo({
+    //       bitCoinAddress: updatedContactInfo.bitCoinAddress,
+    //       emailAddress: updatedContactInfo.emailAddress,
+    //     });
+    //     await tx.wait(1);
   
-        setContactInfo({
-          bitCoinAddress: updatedContactInfo.bitCoinAddress,
-          emailAddress: updatedContactInfo.emailAddress
-        });
+    //     setContactInfo({
+    //       bitCoinAddress: updatedContactInfo.bitCoinAddress,
+    //       emailAddress: updatedContactInfo.emailAddress
+    //     });
 
-        // fetchContractDetails();
-      }
-      catch(e){
-        console.error(e);
-      }
-    }
+    //     // fetchContractDetails();
+    //   }
+    //   catch(e){
+    //     console.error(e);
+    //   }
+    // }
+
+
   };
 
   ChartJS.register(ArcElement, Title);
