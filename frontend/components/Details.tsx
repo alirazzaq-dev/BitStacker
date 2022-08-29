@@ -123,9 +123,7 @@ const Details = () => {
     }
   }
 
-  const submitUpdatedContactInfo = async () => {
-    return;
-    
+  const submitUpdatedContactInfo = async () => {   
     const validEmail = ValidateEmail(updatedContactInfo.emailAddress);
     if (!validEmail) {
       alert("Invalid email address");
