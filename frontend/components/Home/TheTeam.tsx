@@ -62,7 +62,7 @@ const TheTeam = () => {
                 height={133}
                 src={"/assets/pictures/cheng.png"}
               />
-              <h1 className="text-3xl font-bold mt-5 mb-1">Marc Cheng</h1>
+              <h1 className="text-3xl font-bold mt-5 mb-1">Marco Zhong</h1>
               <p className="text-base text-[#F3F3F3] opacity-50">
                 Consulting & Strategy
               </p>

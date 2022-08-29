@@ -12,7 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { ArrowDownOrange } from "../assets/icons";
+import { ArrowDownOrange } from "../../assets/icons";
 
 ChartJS.register(
   CategoryScale,

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Tick } from "../assets/icons";
+import { Tick } from "../../assets/icons";
 
 const PayoutCycle = () => {
   return (

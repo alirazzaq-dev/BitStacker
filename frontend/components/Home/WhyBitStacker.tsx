@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BottomLeft, BottomRight, TopLeft, TopRight } from "../assets/icons";
+import { BottomLeft, BottomRight, TopLeft, TopRight } from "../../assets/icons";
 
 const WhyBitStacker = () => {
   return (

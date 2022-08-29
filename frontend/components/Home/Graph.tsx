@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { TopLeft, TopRight } from "../assets/icons";
+import { TopLeft, TopRight } from "../../assets/icons";
 
 const Graph = () => {
   return (

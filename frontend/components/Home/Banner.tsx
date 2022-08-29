@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "../assets/icons";
+import { ArrowRight } from "../../assets/icons";
 
 const Banner = () => {
   return (
