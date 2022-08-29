@@ -42,3 +42,23 @@ export const trimAddress = (address: string | undefined) => {
     if (address) return address.slice(0,5) + "..." + (address.slice(38,42));
     else return address;
 } 
+
+
+export const ValidateEmail = (email: string) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return (true)
+    }
+    // alert("You have entered an invalid email address!")
+    return (false)
+}
+
+export const ValidateBitcoinAddress = (address: string) => {
+    if (/([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}/.test(address)) {
+        return (true)
+    }
+    // alert("You have entered an invalid email address!")
+    return (false)
+}
+
+
+'([13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34}'

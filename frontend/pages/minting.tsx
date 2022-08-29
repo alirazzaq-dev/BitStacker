@@ -1,4 +1,3 @@
-// import type { NextPage } from "next";
 import React, { useEffect } from "react";
 
 import Image from "next/image";
@@ -12,8 +11,10 @@ import { BigNumber, Contract, ethers } from "ethers";
 import { BitStackerNFT } from "../types";
 import contractAddresses from "../utils/contractAddresses.json";
 import abis from "../utils/abis.json";
-import { excludeDecimals } from "../utils/helpers";
 import { InjectedConnector } from "@web3-react/injected-connector";
+
+import { image0, image1, image2, image3 } from "../public/assets/images";
+import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
@@ -37,10 +38,18 @@ interface Tokens {
   blue: Token;
 }
 
-enum SaleTpe {
+enum SaleType {
   CLOSED,
   PRIVATE,
   PUBLIC,
+}
+
+enum TokenType {
+  VIPBLACK,
+  VIPBLUE,
+  BLACK,
+  BLUE,
+  CLOSED
 }
 
 const injected = new InjectedConnector({
@@ -48,57 +57,52 @@ const injected = new InjectedConnector({
 });
 
 const Minting = () => {
-  const {
-    active,
-    activate,
-    library: provider,
-  } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  const { account, active, activate, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
+  // console.log("active: ", active);
   const [hashAvailabe, setHashAvailable] = useState<string>("160,000");
-  const [saleType, setSaleType] = useState<SaleTpe>(SaleTpe.CLOSED);
+  const [saleType, setSaleType] = useState<SaleType>(SaleType.PUBLIC);
+
   const [tokens, setTokens] = useState<Tokens>();
-  const [selectedToken, setSelectedToken] = useState<number>(1);
+  const [selectedToken, setSelectedToken] = useState<TokenType>(TokenType.BLACK);
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState<{
-    0: number;
-    1: number;
-    2: number;
-    3: number;
-    4: number;
-  }>();
+  const [price, setPrice] = useState<{ 0: number; 1: number; 2: number; 3: number; 4: number; }>();
   const [addresses, setAddresses] = useState({ bitcoin: "", email: "" });
-  // const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  // const [selectedText, setSelectedText] = useState("Black");
+  const [isMinting, setIsMinting] = useState(false);
+  const [balance, setBalance] = useState("0.0000");
 
   const fetchContractDetails = async () => {
-    if (provider) {
+    if (provider && account) {
       try {
-        const contract = new Contract(
-          contractAddresses.BitStackerNFT,
-          abis.BitStackerNFT,
-          provider
-        ) as BitStackerNFT;
+        const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, provider) as BitStackerNFT;
         const _available = contract.terrahashesAvailabe();
         const _saleType = contract.saleType();
         const _vipBlack = contract.vipBlack();
         const _vipBlue = contract.vipBlue();
         const _black = contract.black();
         const _blue = contract.blue();
+        const _contactInfo = contract.contactInfo(account);
 
-        const [available, saleType, vipBlack, vipBlue, black, blue] =
-          await Promise.all([
-            _available,
-            _saleType,
-            _vipBlack,
-            _vipBlue,
-            _black,
-            _blue,
-          ]);
+        const [available, saleType, vipBlack, vipBlue, black, blue, contactInfo] =
+          await Promise.all([_available, _saleType, _vipBlack, _vipBlue, _black, _blue, _contactInfo]);
+
+        setAddresses({ bitcoin: contactInfo.bitCoinAddress, email: contactInfo.emailAddress });
 
         setSaleType(saleType);
+
+        if (saleType === SaleType.CLOSED) {
+          setSelectedToken(TokenType.CLOSED)
+        }
+        else if (saleType === SaleType.PRIVATE) {
+          setSelectedToken(TokenType.VIPBLACK)
+        }
+        else if (saleType === SaleType.PUBLIC) {
+          setSelectedToken(TokenType.BLACK)
+        }
+
         setTokens({ vipBlack, vipBlue, black, blue });
-        setHashAvailable(
-          available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        );
+
+        setHashAvailable(available.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+
         const _price = {
           [0]: Number(ethers.utils.formatEther(vipBlack.price)),
           [1]: Number(ethers.utils.formatEther(vipBlue.price)),
@@ -107,7 +111,13 @@ const Minting = () => {
           [4]: Number(ethers.utils.formatEther("0")),
         };
         setPrice(_price);
-        console.log("_price: ", _price);
+
+        const balanceWei = await provider.getBalance(account);
+        const balanceEths = ethers.utils.formatEther(balanceWei);
+        setBalance(Number(balanceEths).toFixed(4));
+
+
+
       } catch (e) {
         console.error(e);
       }
@@ -133,6 +143,11 @@ const Minting = () => {
   };
 
   const handleMint = async () => {
+    console.log("Minting...")
+
+    setIsMinting(true);
+
+
     if (provider) {
       try {
         const signer = provider.getSigner();
@@ -142,12 +157,27 @@ const Minting = () => {
           signer
         ) as BitStackerNFT;
 
-        if (addresses.bitcoin && addresses.email && price) {
-          const value = (
-            quantity * price[selectedToken as 0 | 1 | 2 | 3]
-          ).toFixed(4);
-          // console.log("selectedToken: ", selectedToken)
-          // console.log("quantity: ", quantity)
+        const validEmail = ValidateEmail(addresses.email);
+        if (!validEmail) {
+          alert("Invalid email address");
+          throw ("INVALID EMAIL")
+        }
+        const validbitcoin = ValidateBitcoinAddress(addresses.bitcoin);
+        if (!validbitcoin) {
+          alert("Invalid bitcoin address");
+          throw ("INVALID Bitcoin Address")
+        }
+
+        if (price) {
+          const value = (quantity * price[selectedToken as 0 | 1 | 2 | 3]).toFixed(4);
+
+          // console.log("balance", balance);
+          // console.log("value", value);
+          if (Number(balance) <= Number(value)) {
+            alert("Balance is insufficient");
+            throw ("Balance is insufficient")
+          }
+
           const tx = await contract.mint(
             selectedToken,
             quantity,
@@ -159,20 +189,44 @@ const Minting = () => {
           );
           await tx.wait(1);
           fetchContractDetails();
+          setIsMinting(false);
+          alert("Success. Congratulations.");
+
         } else {
           alert("Please fill in your BitCoin and Email address before minting");
+          setIsMinting(false);
+
         }
-      } catch (e) {
+      } catch (e: any) {
         console.error(e);
+        setIsMinting(false);
+
       }
     } else {
       await activate(injected);
+      setIsMinting(false);
+
     }
+
+
   };
 
   useEffect(() => {
     fetchContractDetails();
   }, [provider]);
+
+
+
+  const handleType = async (type: SaleType) => {
+    if (provider) {
+      const signer = provider.getSigner();
+      const contract = new Contract(contractAddresses.BitStackerNFT, abis.BitStackerNFT, signer) as BitStackerNFT;
+      const tx = await contract.setSaleType(type);
+      await tx.wait(1);
+    }
+  }
+
+
 
   return (
     <div className="flex bg-[#070503] min-h-screen">
@@ -209,13 +263,6 @@ const Minting = () => {
 
               <div className="flex my-5 items-center">
                 <div onClick={() => handleQuantity("decrease")}>
-                  {/* <Image
-                    alt="arrow-left"
-                    width={41}
-                    height={20}
-                    src={"/assets/icons/arrow-left.svg"}
-                    onClick={() => handleQuantity("decrease")}
-                  /> */}
                   <ArrowLeft />
                 </div>
 
@@ -242,126 +289,66 @@ const Minting = () => {
                   defaultValue={selectedToken}
                   onChange={(e) => setSelectedToken(Number(e.target.value))}
                 >
-                  <option
-                    className="font-medium my-1 text-base"
-                    value={0}
-                    style={{ background: "black" }}
-                  >
-                    VIP Black
-                  </option>
+                  {
+                    saleType === SaleType.PRIVATE && (
+                      <>
+                        <option
+                          className="font-medium my-1 text-base"
+                          value={TokenType.VIPBLACK}
+                          style={{ background: "black" }}
+                        >
+                          VIP Black
+                        </option>
 
-                  <option
-                    className="font-medium my-1 text-base"
-                    value={1}
-                    style={{ background: "black" }}
-                  >
-                    VIP Blue
-                  </option>
+                        <option
+                          className="font-medium my-1 text-base"
+                          value={TokenType.VIPBLUE}
+                          style={{ background: "black" }}
+                        >
+                          VIP Blue
+                        </option>
 
-                  <option
-                    className="font-medium my-1 text-base"
-                    value={2}
-                    style={{ background: "black" }}
-                  >
-                    Black
-                  </option>
+                      </>
+                    )
+                  }
 
-                  <option
-                    className="font-medium my-1 text-base"
-                    value={3}
-                    style={{ background: "black" }}
-                  >
-                    Blue
-                  </option>
+                  {
+                    saleType === SaleType.PUBLIC && (
+                      <>
+                        <option
+                          className="font-medium my-1 text-base"
+                          value={TokenType.BLACK}
+                          style={{ background: "black" }}
+                        >
+                          Black
+                        </option>
 
-                  <option
-                    className="font-medium my-1 text-base"
-                    value={4}
-                    style={{ background: "black" }}
-                  >
-                    Closed
-                  </option>
+                        <option
+                          className="font-medium my-1 text-base"
+                          value={TokenType.BLUE}
+                          style={{ background: "black" }}
+                        >
+                          Blue
+                        </option>
+                      </>
+                    )
+                  }
+
+                  {
+                    saleType === SaleType.CLOSED && (
+                      <option
+                        className="font-medium my-1 text-base"
+                        value={TokenType.CLOSED}
+                        style={{ background: "black" }}
+                      >
+                        Closed
+                      </option>
+                    )
+                  }
+
+
                 </select>
 
-                {/* <div>
-                  <div
-                    onClick={() => { setIsDropDownOpen(!isDropDownOpen);}}
-                    className={`${isDropDownOpen && ` bg-[#231F19] rounded-xl`} ml-1 cursor-pointer p-1 h-[72px]`} 
-                    >
-
-                    <div className="flex items-center">
-                      <div
-                        className={`${
-                          isDropDownOpen
-                            ? `${
-                                selectedText === "Black"
-                                  ? " bg-[#000000]"
-                                  : " bg-[#02B2F2]"
-                              } `
-                            : "bg-transparent border border-[#00000033]"
-                        } w-4 h-4 rounded-full flex items-center justify-center`}
-                      >
-                        <div className="bg-[#fff] w-1 h-1 rounded-full"></div>
-                      </div>
-                      <span className="font-bold text-2xl mx-3">
-                        {selectedText}
-                      </span>
-
-                      <svg
-                        width="11"
-                        height="12"
-                        viewBox="0 0 11 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5.5 1L5.5 10.5M5.5 10.5L10 4.5M5.5 10.5L1 4.5"
-                          stroke="url(#paint0_linear_166_466)"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                        />
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_166_466"
-                            x1="10"
-                            y1="0.5"
-                            x2="10"
-                            y2="7.8136"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop stopColor="white" stopOpacity="0" />
-                            <stop offset="1" stopColor="white" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
-
-                    {
-                    isDropDownOpen && (
-                      <div
-                        onClick={() => { setSelectedText( selectedText === "Black" ? "Blue" : "Black")}}
-                        className="flex items-center"
-                      >
-                        <div
-                          className={`${
-                            isDropDownOpen
-                              ? `${
-                                  selectedText === "Black"
-                                    ? " bg-[#02B2F2]"
-                                    : " bg-[#000000]"
-                                } `
-                              : "bg-transparent border border-[#00000033]"
-                          } w-4 h-4 rounded-full flex items-center justify-center`}
-                        >
-                          <div className="bg-[#fff] w-1 h-1 rounded-full"></div>
-                        </div>
-                        <span className="font-bold text-2xl mx-3">
-                          {selectedText === "Black" ? "Blue" : "Black"}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div> */}
               </div>
 
               <div className="w-[400px]">
@@ -382,9 +369,10 @@ const Minting = () => {
 
                 <button
                   onClick={handleMint}
+                  disabled={!active || selectedToken === TokenType.CLOSED || isMinting}
                   className="bg-transparent text-[#F7931B] text-base mt-2 w-full border-2 border-[#F7931B] rounded-full py-5 px-32"
                 >
-                  Mint
+                  {isMinting ? "Minting . . . " : "Mint"}
                 </button>
               </div>
 
@@ -404,15 +392,39 @@ const Minting = () => {
               >
                 <div className="bg-[#F7931B] absolute top-0 right-0  h-[300px] w-[300px] blur-[5000px]"></div>
 
-                <img
-                  alt="minting-banner"
-                  src={"/assets/pictures/minting-banner.png"}
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 10
+                  }}>
+                  <Image
+                    width={800}
+                    height={500}
+                    alt="minting-banner"
+                    src={
+                      selectedToken === TokenType.VIPBLACK ? image0 :
+                        selectedToken === TokenType.VIPBLUE ? image1 :
+                          selectedToken === TokenType.BLACK ? image2 :
+                            selectedToken === TokenType.BLUE ? image3 : image0
+                    }
+                  />
+                </div>
+
               </div>
             </div>
           </div>
         </div>
         <SmallFooter />
+
+        <div style={{ height: "10vh", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
+          <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
+          <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
+          <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
+        </div>
+
+
       </div>
     </div>
   );
