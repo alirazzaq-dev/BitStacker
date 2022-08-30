@@ -355,16 +355,16 @@ const Minting = () => {
                 <input
                   type="text"
                   className="border border-[#F7931B] my-1 outline-none text-base bg-transparent rounded-full py-2 px-3 w-full"
-                  value={addresses.email}
-                  placeholder="Enter Your Email Address"
-                  onChange={(e) => handleAddresses(e.target.value, "email")}
+                  value={addresses.bitcoin}
+                  placeholder="Enter Your Bitcoin Address"
+                  onChange={(e) => handleAddresses(e.target.value, "bitcoin")}
                 />
                 <input
                   type="text"
                   className="border border-[#F7931B] my-1 outline-none text-base bg-transparent rounded-full py-2 px-3 w-full"
-                  value={addresses.bitcoin}
-                  placeholder="Enter Your Bitcoin Address"
-                  onChange={(e) => handleAddresses(e.target.value, "bitcoin")}
+                  value={addresses.email}
+                  placeholder="Enter Your Email Address"
+                  onChange={(e) => handleAddresses(e.target.value, "email")}
                 />
 
                 <button

@@ -52,7 +52,7 @@ const DonutChart = (
                 label: "Dataset",
                 data: [100],
                 backgroundColor: ["#ff7171"],
-                borderColor: ["#ff3f3f"],
+                borderColor: ["#060505"],
                 cutout: 100,
             },
         ],

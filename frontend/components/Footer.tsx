@@ -77,13 +77,13 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between w-full mt-10">
+      {/* <div className="flex items-center justify-between w-full mt-10">
         {FooterItems.map(({ text }, index) => (
           <h3 className="font-base font-normal" key={index}>
             {text}
           </h3>
         ))}
-      </div>
+      </div> */}
 
       <div className="bg-[#fff] opacity-10 mt-8 mb-4 h-px w-full max-w-[780px]"></div>
       <p className="opacity-50 text-base font-normal mb-2">
