@@ -13,7 +13,7 @@ import contractAddresses from "../utils/contractAddresses.json";
 import abis from "../utils/abis.json";
 import { InjectedConnector } from "@web3-react/injected-connector";
 
-import { image0, image1, image2, image3 } from "../public/assets/images";
+import { image0, image1, image2, image3 } from "../assets/images";
 import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async (context) => {

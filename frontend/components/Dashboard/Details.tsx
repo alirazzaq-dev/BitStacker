@@ -9,6 +9,11 @@ import { Bitcoin, Chart, Etherum, Timer } from "../../assets/icons";
 import UpdateModel from "./UpdateModel";
 import WithdrawModel from "./WithdrawModel";
 import DonutChart from "./DonutChart";
+// import axios from "axios";
+// import reader from "g-sheets-api";
+import { GoogleSpreadsheet } from 'google-spreadsheet';
+import axios from "axios";
+
 
 export interface Balances {
   total: number;
@@ -31,6 +36,9 @@ export interface Hashes {
 }
 
 const Details = () => {
+
+
+
   const { account, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [balances, setBalances] = useState<Balances>();
   const [hashes, setHashes] = useState<Hashes>();
@@ -107,8 +115,14 @@ const Details = () => {
     }
   };
 
+  const fetchRevenueData = async () => {
+    const res = await axios.post("/api/getUserInfo", {address: account});
+    console.log("res: ", res.data[0]);
+  }
+
   useEffect(() => {
     fetchContractDetails();
+    fetchRevenueData();
   }, [provider]);
 
   useEffect(() => {
@@ -118,6 +132,9 @@ const Details = () => {
       document.body.style.overflow = "unset";
     }
   }, [showWithDrawModal]);
+
+
+
 
   return (
     <div className="flex space-x-5">

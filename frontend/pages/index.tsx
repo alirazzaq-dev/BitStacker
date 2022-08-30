@@ -23,6 +23,15 @@ export const getStaticProps: GetStaticProps = async (context) => {
   };
 };
 
+
+// Instructions 
+// https://theoephraim.github.io/node-google-spreadsheet/#/getting-started/authentication
+
+
+// Reader
+// https://robkendal.co.uk/blog/reading-google-sheets-data-using-javascript-with-google-sheets-reader
+
+
 const Home = () => {
   return (
     <div>

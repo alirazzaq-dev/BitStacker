@@ -1,6 +1,4 @@
 import React from "react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import {
   Announcements,
   Chart,
@@ -12,7 +10,8 @@ import {
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
-const Dashboard = () => {
+const Dashboard = (props: any) => {
+
   const { active, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
 
   return (
