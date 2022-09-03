@@ -20,13 +20,13 @@ const DonutChart = (
     const [donut, setDonut] = useState(DONUT.NFTS);
 
     const dataNFTs = {
-        labels: ["Black NFts", "Blue NFTs"],
+        labels: ["VIPBlack", "Black", "VIPBlue", "Blue"],
         datasets: [
-            {
+            { 
                 label: "Dataset",
-                data: [balances?.totalBlack, balances?.totalBlue],
-                backgroundColor: ["#171717", "#215FFF"],
-                borderColor: ["#363636", "#215FFF"],
+                data: [balances?.vipBlack, balances?.black, balances?.vipBlue, balances?.blue],
+                backgroundColor: ["#070707", "#302f2f", "#0538b7", "#507ef1"],
+                borderColor: ["#070707", "#302f2f", "#0538b7", "#507ef1"],
                 hoverOffset: 4,
                 cutout: 120,
             },
@@ -34,13 +34,13 @@ const DonutChart = (
     };
 
     const dataHashes = {
-        labels: ["Black Hashes", "Blue Hashes"],
+        labels: ["VIPBlack", "Black", "VIPBlue", "Blue"],
         datasets: [
             {
                 label: "Dataset",
-                data: [hashes?.totalBlackHases, hashes?.totalBlueHases],
-                backgroundColor: ["#171717", "#215FFF"],
-                borderColor: ["#363636", "#215FFF"],
+                data: [hashes?.vipBlackHash, hashes?.blackHash, hashes?.vipBlueHash, hashes?.vipBlueHash],
+                backgroundColor: ["#070707", "#302f2f", "#0538b7", "#507ef1"],
+                borderColor: ["#070707", "#302f2f", "#0538b7", "#507ef1"],
                 cutout: 100,
             },
         ],

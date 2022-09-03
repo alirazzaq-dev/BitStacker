@@ -37,8 +37,6 @@ export interface Hashes {
 
 const Details = () => {
 
-
-
   const { account, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
   const [balances, setBalances] = useState<Balances>();
   const [hashes, setHashes] = useState<Hashes>();
@@ -134,7 +132,7 @@ const Details = () => {
   }, [showWithDrawModal]);
 
 
-
+  // https://docs.google.com/spreadsheets/d/1MarRDOEqIK9EtBqACrxICnCDC6IOCWJdxUYktoJU2pY/edit#gid=0
 
   return (
     <div className="flex space-x-5">
@@ -218,7 +216,7 @@ const Details = () => {
             <div className="ml-5">
               <h2 className="font-medium text-xl">Total hashpower</h2>
               <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                {hashes?.total}
+                {hashes?.total} Terrahash
               </p>
             </div>
           </div>

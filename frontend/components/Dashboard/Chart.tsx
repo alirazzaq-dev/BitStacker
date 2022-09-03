@@ -72,7 +72,7 @@ const Chart = () => {
           <span className="text-[#F9921C] "> BTC</span> Holding
         </h1>
 
-        <div
+        {/* <div
           onClick={() => {
             setIsDropDownOpen(!isDropDownOpen);
           }}
@@ -103,7 +103,7 @@ const Chart = () => {
               Yearly
             </h5>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>

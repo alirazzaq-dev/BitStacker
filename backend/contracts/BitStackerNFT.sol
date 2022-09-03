@@ -35,10 +35,10 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
 
     // Types of tokens  -> For Testnet
-    Tokentype public vipBlack = Tokentype(0, 40, 0, 0);
-    Tokentype public vipBlue = Tokentype(1, 4, 0, 0);
-    Tokentype public black = Tokentype(2, 20, 0, 0);
-    Tokentype public blue = Tokentype(3, 4, 0, 0);
+    Tokentype public vipBlack = Tokentype(0, 40, 2 ether, 0);
+    Tokentype public vipBlue = Tokentype(1, 4, 0.2 ether, 0);
+    Tokentype public black = Tokentype(2, 20, 1 ether, 0);
+    Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
 
     string public name = "BitStacker Tokens";
     string private baseURL = "https://ipfs.io/ipfs/QmXtQ3CdFaTMRFBAz36N47R8dhJ1REPKnxaGxaS47SxroA/";

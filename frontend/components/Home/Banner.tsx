@@ -1,7 +1,21 @@
 import Image from "next/image";
 import { ArrowRight } from "../../assets/icons";
+import { useRouter } from 'next/router'
 
 const Banner = () => {
+  const router = useRouter();
+
+  const handleRoute = (r: "dashboard" | "minting") => {
+    if (r === "dashboard") {
+      router.push("dashboard");
+    }
+    else if (r === "minting") {
+      router.push("minting");
+    }
+  } 
+
+
+
   return (
     <>
       <div id="home" className="flex pt-36 mt-0 items-center my-14">
@@ -17,10 +31,16 @@ const Banner = () => {
             perpetual contract to reward its holders with Bitcoin.
           </h5>
           <div className="flex items-center  mt-14">
-            <button className="rounded-lg bg-[#F7931A] font-medium text-xl py-3 px-7">
+
+            <button
+              onClick={() => handleRoute("dashboard")} 
+              className="rounded-lg bg-[#F7931A] font-medium text-xl py-3 px-7">
               Dashboard
             </button>
-            <button className="rounded-lg flex items-center  font-normal text-xl py-3 px-7">
+            <button 
+              
+              onClick={() => handleRoute("minting")} 
+              className="rounded-lg flex items-center  font-normal text-xl py-3 px-7">
               Minting
               <span>
                 <ArrowRight />
