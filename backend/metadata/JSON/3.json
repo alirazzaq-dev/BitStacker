@@ -3,6 +3,8 @@
     "description": "BitStacker is an innovative cloud mining solution that utilizes NFTs as a perpetual smart contract & rewarding the holders with Bitcoin.",
     "image": "https://ipfs.io/ipfs/QmSwAXp74YmhZ5BLL8bLGnv25y7u16VC8FooSZXJ7YN4qi/3.gif",
     "properties": {
-        "Hashrate": "4 TH/s"
+        "id": "3",
+        "Hashrate": "4 TH/s",
+        "color": "Black"
     }
 }

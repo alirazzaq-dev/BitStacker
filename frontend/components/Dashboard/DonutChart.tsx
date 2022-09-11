@@ -20,9 +20,9 @@ const DonutChart = (
     const [donut, setDonut] = useState(DONUT.NFTS);
 
     const dataNFTs = {
-        labels: ["VIPBlack", "Black", "VIPBlue", "Blue"],
+        labels: ["Royal Black", "Black", "Royal Blue", "Blue"],
         datasets: [
-            { 
+            {
                 label: "Dataset",
                 data: [balances?.vipBlack, balances?.black, balances?.vipBlue, balances?.blue],
                 backgroundColor: ["#070707", "#302f2f", "#0538b7", "#507ef1"],
@@ -30,11 +30,12 @@ const DonutChart = (
                 hoverOffset: 4,
                 cutout: 120,
             },
-        ],
+        ]
     };
 
+
     const dataHashes = {
-        labels: ["VIPBlack", "Black", "VIPBlue", "Blue"],
+        labels: ["Royal Black", "Black", "Royal Blue", "Blue"],
         datasets: [
             {
                 label: "Dataset",
@@ -86,6 +87,7 @@ const DonutChart = (
                             width={250}
                             height={250}
                             data={donut === DONUT.NFTS ? dataNFTs : dataHashes}
+
                         />
                     )
                 }

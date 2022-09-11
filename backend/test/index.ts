@@ -295,9 +295,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther("6000"));
 
         await expect(bitStackerNFT.connect(user1).mint(0, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user1).mint(1, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
       })
 
@@ -447,9 +447,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther("2000"));
 
         await expect(bitStackerNFT.connect(user1).mint(2, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(1)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user1).mint(3, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
       })
 
@@ -488,9 +488,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther("6000"));
 
         await expect(bitStackerNFT.connect(user2).mint(0, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user2).mint(1, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
 
         await bitStackerNFT.setSaleType(2)
@@ -522,9 +522,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther(String(2000 + 6000)));
 
         await expect(bitStackerNFT.connect(user2).mint(2, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(1)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user2).mint(3, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
         expect(await bitStackerNFT.totalSupply(0)).to.be.equal(1500);
         expect(await bitStackerNFT.totalSupply(1)).to.be.equal(15000);
@@ -624,9 +624,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther(String(2000 + 6000 + 1500)));
 
         await expect(bitStackerNFT.connect(user4).mint(0, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user4).mint(1, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
 
         await bitStackerNFT.setSaleType(2)
@@ -657,9 +657,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther(String(2000 + 6000 + 1500 + 3000)));
 
         await expect(bitStackerNFT.connect(user4).mint(2, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(1)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user4).mint(3, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
 
         expect(await bitStackerNFT.totalSupply(0)).to.be.equal(1875);
@@ -716,9 +716,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther(String(2000 + 6000 + 1500 + 3000 + 2500)));
 
         await expect(bitStackerNFT.connect(user6).mint(0, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user6).mint(1, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
         await bitStackerNFT.setSaleType(2)
 
@@ -749,9 +749,9 @@ describe("BitStackerNFT Test Stack", function () {
         expect(await provider.getBalance(bitStackerNFT.address)).to.be.equal(ethers.utils.parseEther(String(2000 + 6000 + 1500 + 3000 + 2500 + 2500)));
 
         await expect(bitStackerNFT.connect(user6).mint(2, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(1)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
         await expect(bitStackerNFT.connect(user6).mint(3, 1, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther(String(0.2)) }))
-          .to.be.revertedWith("NOT_ENOUGH_HATHRATE_AVAILABLE");
+          .to.be.revertedWith("NOT_ENOUGH_HASHRATE_AVAILABLE()");
 
         expect(await bitStackerNFT.totalSupply(0)).to.be.equal(2500);
         expect(await bitStackerNFT.totalSupply(1)).to.be.equal(25000);
@@ -853,6 +853,71 @@ describe("BitStackerNFT Test Stack", function () {
 
     expect((await bitStackerNFT.hashesOf(user1.address))._blackHash).to.be.equal(100);
     expect((await bitStackerNFT.hashesOf(user1.address))._blueHash).to.be.equal(20);
+
+  })
+
+
+  it("With 80k terraHash", async () => {
+    await bitStackerNFT.extendTerraHashes(40_000, 40_000);
+    expect(await bitStackerNFT.totalTerraHashes()).is.to.equal(80_000);
+    expect(await bitStackerNFT.terrahashesAvailabe()).is.to.equal(80_000);
+    expect(await bitStackerNFT.totalPresaleTerraHashesSold()).is.to.equal(0);
+    expect(await bitStackerNFT.totalPublicsaleterraHashesSold()).is.to.equal(0);
+
+    
+
+    await bitStackerNFT.setSaleType(1)
+
+
+    await bitStackerNFT.connect(user1)
+    .mint(0, 500, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("1000") })
+    await bitStackerNFT.connect(user2)
+    .mint(0, 500, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("1000") })
+    await bitStackerNFT.connect(user3)
+    // .mint(0, 250, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("500") })
+    // await bitStackerNFT.connect(user4)
+    // .mint(0, 250, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("500") })
+    expect(await bitStackerNFT.terrahashesAvailabe()).is.to.equal(40_000);
+    expect(await bitStackerNFT.totalPresaleTerraHashesSold()).is.to.equal(40_000);
+    expect(await bitStackerNFT.totalPublicsaleterraHashesSold()).is.to.equal(0);
+
+
+    console.log(await bitStackerNFT.balanceOf(user1.address, 5));
+    console.log("URI: ", await bitStackerNFT.uri(0));
+    
+    // Tokentype public vipBlack = Tokentype(0, 40, 2 ether, 0);
+    // Tokentype public vipBlue = Tokentype(1, 4, 0.2 ether, 0);
+    // Tokentype public black = Tokentype(2, 20, 1 ether, 0);
+    // Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
+
+
+    // await expect(() =>
+    //   bitStackerNFT.connect(user1).mint(0, 2, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("4") })
+    // ).to.changeEtherBalance(bitStackerNFT, ethers.utils.parseEther("4"))
+
+    // expect((await bitStackerNFT.hashesOf(user1.address))._vipBlackHash).to.be.equal(80);
+    // expect((await bitStackerNFT.hashesOf(user1.address))._vipBlueHash).to.be.equal(0);
+
+    // await expect(() =>
+    //   bitStackerNFT.connect(user1).mint(1, 3, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("0.6") })
+    // ).to.changeEtherBalance(bitStackerNFT, ethers.utils.parseEther("0.6"))
+
+    // expect((await bitStackerNFT.hashesOf(user1.address))._vipBlackHash).to.be.equal(80);
+    // expect((await bitStackerNFT.hashesOf(user1.address))._vipBlueHash).to.be.equal(12);
+
+    // // await expect(bitStackerNFT.setSaleType(true, true)).to.be.revertedWith("BOTH_CANT_BE_TRUE");
+    // await bitStackerNFT.setSaleType(2)
+
+    // await expect(() =>
+    //   bitStackerNFT.connect(user1).mint(2, 5, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("5") })
+    // ).to.changeEtherBalance(bitStackerNFT, ethers.utils.parseEther("5"))
+
+    // await expect(() =>
+    //   bitStackerNFT.connect(user1).mint(3, 5, {bitCoinAddress: "", emailAddress: ""}, { value: ethers.utils.parseEther("1") })
+    // ).to.changeEtherBalance(bitStackerNFT, ethers.utils.parseEther("1"))
+
+    // expect((await bitStackerNFT.hashesOf(user1.address))._blackHash).to.be.equal(100);
+    // expect((await bitStackerNFT.hashesOf(user1.address))._blueHash).to.be.equal(20);
 
   })
   

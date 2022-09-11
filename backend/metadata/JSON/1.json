@@ -1,8 +1,10 @@
 {
-    "name": "VIP Blue",
-    "description": "MetaMiner.Club is a private, innovative cloud mining solution that utilizes NFTs as a perpetual smart contract & rewarding the members with Bitcoin. The VIP Blue tier (by invitation only) is affords the member with special rewards.",
+    "name": "Royal Blue",
+    "description": "MetaMiner.Club is a private, innovative cloud mining solution that utilizes NFTs as a perpetual smart contract & rewarding the members with Bitcoin. The Royal Blue tier (by invitation only) is affords the member with special rewards.",
     "image": "https://ipfs.io/ipfs/QmSwAXp74YmhZ5BLL8bLGnv25y7u16VC8FooSZXJ7YN4qi/1.png",
     "properties": {
-        "Hashrate": "4 TH/s"
+        "id": "1",
+        "Hashrate": "4 TH/s",
+        "color": "Royal Blue"
     }
 }

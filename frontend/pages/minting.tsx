@@ -58,7 +58,6 @@ const injected = new InjectedConnector({
 
 const Minting = () => {
   const { account, active, activate, library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
-  // console.log("active: ", active);
   const [hashAvailabe, setHashAvailable] = useState<string>("160,000");
   const [saleType, setSaleType] = useState<SaleType>(SaleType.PUBLIC);
 
@@ -157,17 +156,17 @@ const Minting = () => {
           signer
         ) as BitStackerNFT;
 
-        const validEmail = ValidateEmail(addresses.email);
-        if (!validEmail) {
-          alert("Invalid email address");
-          throw ("INVALID EMAIL")
-        }
         const validbitcoin = ValidateBitcoinAddress(addresses.bitcoin);
         if (!validbitcoin) {
           alert("Invalid bitcoin address");
           throw ("INVALID Bitcoin Address")
         }
-
+        const validEmail = ValidateEmail(addresses.email);
+        if (!validEmail) {
+          alert("Invalid email address");
+          throw ("INVALID EMAIL")
+        }
+        
         if (price) {
           const value = (quantity * price[selectedToken as 0 | 1 | 2 | 3]).toFixed(4);
 
@@ -297,7 +296,7 @@ const Minting = () => {
                           value={TokenType.VIPBLACK}
                           style={{ background: "black" }}
                         >
-                          VIP Black
+                          Royal Black
                         </option>
 
                         <option
@@ -305,7 +304,7 @@ const Minting = () => {
                           value={TokenType.VIPBLUE}
                           style={{ background: "black" }}
                         >
-                          VIP Blue
+                          Royal Blue
                         </option>
 
                       </>

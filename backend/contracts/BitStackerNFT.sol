@@ -15,7 +15,7 @@ error SALE_IS_NOT_LIVE();
 error MINT_ONLY_VIP_TOKENS();
 error MINT_ONLY_NORMAL_TOKENS();
 error INSUFFICIENT_FUNDS();
-error NOT_ENOUGH_HATHRATE_AVAILABLE();
+error NOT_ENOUGH_HASHRATE_AVAILABLE();
 error NULL_BALANCE();
 error UNABLE_TO_TRANSFER_FUNDS();
 error TOKEN_NOT_EXIST();
@@ -41,7 +41,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
     Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
 
     string public name = "BitStacker Tokens";
-    string private baseURL = "https://ipfs.io/ipfs/QmXtQ3CdFaTMRFBAz36N47R8dhJ1REPKnxaGxaS47SxroA/";
+    string private baseURL = "https://ipfs.io/ipfs/QmeVoaJp5pZbEboNLsZAV7DnXsFHZRmbvQ3RendamWoXX1/";
 
     mapping (address => ContactInfo) public contactInfo;
 
@@ -79,7 +79,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = vipBlack.hashRate * _amount;
                 if(totalPresaleTerraHashesSold() + totalTerraHashesMinting > THForPresale){
-                    revert NOT_ENOUGH_HATHRATE_AVAILABLE();
+                    revert NOT_ENOUGH_HASHRATE_AVAILABLE();
                 }
                 vipBlack.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
@@ -89,7 +89,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = vipBlue.hashRate * _amount;
                 if(totalPresaleTerraHashesSold() + totalTerraHashesMinting > THForPresale){
-                    revert NOT_ENOUGH_HATHRATE_AVAILABLE();
+                    revert NOT_ENOUGH_HASHRATE_AVAILABLE();
                 }
                 vipBlue.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
@@ -107,7 +107,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = black.hashRate * _amount;
                 if(totalPublicsaleterraHashesSold() + totalTerraHashesMinting > THForPublicsale){
-                    revert NOT_ENOUGH_HATHRATE_AVAILABLE();
+                    revert NOT_ENOUGH_HASHRATE_AVAILABLE();
                 }
                 black.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
@@ -117,7 +117,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
                 if(msg.value < totalCost) revert INSUFFICIENT_FUNDS();
                 uint totalTerraHashesMinting = blue.hashRate * _amount;
                 if(totalPublicsaleterraHashesSold() + totalTerraHashesMinting > THForPublicsale){
-                    revert NOT_ENOUGH_HATHRATE_AVAILABLE();
+                    revert NOT_ENOUGH_HASHRATE_AVAILABLE();
                 }
                 blue.terraHashedSold += totalTerraHashesMinting;
                 _mint(msg.sender, uint256(_category), _amount, "");
@@ -150,7 +150,7 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         return string(
             abi.encodePacked(
                 baseURL,
-                Strings.toString(_tokenid),".json"
+                Strings.toString(uint8(_tokenid)),".json"
             )
         );
     }
