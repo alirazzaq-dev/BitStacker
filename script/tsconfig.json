@@ -4,8 +4,6 @@
       "outDir": "./dist",
       "rootDir": "./src",
       "module": "commonjs",
-      // "allowJs": true,
-      // "checkJs": true,
-      // "esModuleInterop": true,
-  }
+      "allowUnreachableCode": true
+    },
 }

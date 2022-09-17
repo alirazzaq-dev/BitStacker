@@ -4,15 +4,20 @@ import { useEffect, useState } from "react";
 import contractAddresses from "../../utils/contractAddresses.json";
 import abis from "../../utils/abis.json";
 import { BitStackerNFT } from "../../types";
-import { Bitcoin, Chart, Etherum, Timer } from "../../assets/icons";
-
+import { Bitcoin, Chart as ChartIcon, Etherum, Timer } from "../../assets/icons";
+import Chart from "./Chart";
 import UpdateModel from "./UpdateModel";
 import WithdrawModel from "./WithdrawModel";
 import DonutChart from "./DonutChart";
-// import axios from "axios";
-// import reader from "g-sheets-api";
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 import axios from "axios";
+
+let defaultRevenue = {
+  1: "", 2: "", 3: "", 4: "", 5: "", 6: "", 7: "", 8: "",
+  9: "", 10: "", 11: "", 12: "", 13: "", 14: "", 15: "", 16: "",
+  17: "", 18: "", 19: "", 20: "", 21: "", 22: "", 23: "", 24: "",
+  25: "", 26: "", 27: "", 28: "", 29: "", 30: "", 31: "", sheetName: "",
+  addresses: "", redeemedReward: "0", totalReward: "0", totalRewardLastMonth: "0"
+}
 
 
 export interface Balances {
@@ -113,9 +118,19 @@ const Details = () => {
     }
   };
 
+  const [revenue, setRevenue] = useState(defaultRevenue);
+
   const fetchRevenueData = async () => {
-    const res = await axios.post("/api/getUserInfo", {address: account});
-    console.log("res: ", res.data[0]);
+    try {
+      const res = await axios.post("/api/getUserInfo", { address: account });
+      const data: any = res.data[0] as Object;
+      setRevenue(data);
+      // console.log("data", data)
+    }
+    catch (e) {
+      console.error(e);
+    }
+
   }
 
   useEffect(() => {
@@ -134,133 +149,138 @@ const Details = () => {
 
   // https://docs.google.com/spreadsheets/d/1MarRDOEqIK9EtBqACrxICnCDC6IOCWJdxUYktoJU2pY/edit#gid=0
   // 1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
-  
+
   return (
-    <div className="flex space-x-5">
+    <>
+      <div className="flex space-x-5">
 
-      <div className="flex-1 space-y-4">
-        <div className="rounded-3xl bg-[#121212] flex items-center py-4 px-6">
-          <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
-            <Etherum />
-          </div>
-
-          <div className="ml-5">
-            <h2 className="font-medium text-xl">Ethereum Wallet Address:</h2>
-            <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-              {account}
-            </p>
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-[#121212] justify-between flex items-center py-4 px-6">
-          <div className="flex flex-col">
-            <div className="flex items-center">
-              <h2 className="font-medium text-xl">BitCoin Address:</h2>
-              <p className="opacity-50 font-lighter ml-4 text-base leading-[36px]">
-                {contactInfo.bitCoinAddress}
-              </p>
-            </div>
-            <div className="flex items-center">
-              <h2 className="font-medium text-xl">Email Address:</h2>
-              <p className="opacity-50 font-lighter ml-4 text-base leading-[36px]">
-                {contactInfo.emailAddress}
-              </p>
-            </div>
-          </div>
-
-          <button
-            className="bg-[#F5931B] rounded-xl px-8 py-3"
-            onClick={() => setShowUpdateModal(true)}
-
-          >
-            Update
-          </button>
-        </div>
-
-        <div className="flex items-center space-x-5">
-          <div className="rounded-3xl flex-1 bg-[#121212] flex items-center py-4 px-6">
-            <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
-              <Bitcoin />
-            </div>
-            <div className="ml-5 flex items-center justify-between flex-1">
-              <div>
-                <h2 className="font-medium text-xl">Total BTC Earned</h2>
-                <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                  0.18300
-                </p>
-              </div>
-              <Chart />
-            </div>
-          </div>
-
-          <div className="rounded-3xl flex-1 bg-[#121212] flex items-center py-4 px-6">
-            <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
-              <Bitcoin />
-            </div>
-            <div className="ml-5 flex items-center justify-between flex-1">
-              <div>
-                <h2 className="font-medium text-xl">Total BTC Earned</h2>
-                <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                  0.18300
-                </p>
-              </div>
-              <Chart />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center space-x-5">
+        <div className="flex-1 space-y-4">
           <div className="rounded-3xl bg-[#121212] flex items-center py-4 px-6">
             <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
-              <Timer />
+              <Etherum />
             </div>
+
             <div className="ml-5">
-              <h2 className="font-medium text-xl">Total hashpower</h2>
+              <h2 className="font-medium text-xl">Ethereum Wallet Address:</h2>
               <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                {hashes?.total} Terrahash
+                {account}
               </p>
             </div>
           </div>
-          <div className="rounded-3xl flex-1 opacity-50 bg-[#121212] flex items-center py-4 px-6">
-            <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
-              <Bitcoin />
-            </div>
-            <div className="ml-5 flex-1 flex justify-between items-center">
-              <div>
-                <h2 className="font-medium text-xl">Available Balance</h2>
-                <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                  0
+
+          <div className="rounded-3xl bg-[#121212] justify-between flex items-center py-4 px-6">
+            <div className="flex flex-col">
+              <div className="flex items-center">
+                <h2 className="font-medium text-xl">BitCoin Address:</h2>
+                <p className="opacity-50 font-lighter ml-4 text-base leading-[36px]">
+                  {contactInfo.bitCoinAddress}
                 </p>
               </div>
+              <div className="flex items-center">
+                <h2 className="font-medium text-xl">Email Address:</h2>
+                <p className="opacity-50 font-lighter ml-4 text-base leading-[36px]">
+                  {contactInfo.emailAddress}
+                </p>
+              </div>
+            </div>
 
-              <button
-                onClick={() => {
-                  setShowWithdrawModal(true);
-                }}
-                className="bg-[#F5931B] rounded-xl px-8 py-3"
-              >
-                Withdraw
-              </button>
+            <button
+              className="bg-[#F5931B] rounded-xl px-8 py-3"
+              onClick={() => setShowUpdateModal(true)}
+
+            >
+              Update
+            </button>
+          </div>
+
+          <div className="flex items-center space-x-5">
+            <div className="rounded-3xl flex-1 bg-[#121212] flex items-center py-4 px-6">
+              <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
+                <Bitcoin />
+              </div>
+              <div className="ml-5 flex items-center justify-between flex-1">
+                <div>
+                  <h2 className="font-medium text-xl">Total BTC Earned</h2>
+                  <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+                    {revenue.totalReward}
+                  </p>
+                </div>
+                <ChartIcon />
+              </div>
+            </div>
+
+            <div className="rounded-3xl flex-1 bg-[#121212] flex items-center py-4 px-6">
+              <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
+                <Bitcoin />
+              </div>
+              <div className="ml-5 flex items-center justify-between flex-1">
+                <div>
+                  <h2 className="font-medium text-xl"> Redeemed </h2>
+                  <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+                    {revenue.redeemedReward}
+                  </p>
+                </div>
+                <ChartIcon />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-5">
+            <div className="rounded-3xl bg-[#121212] flex items-center py-4 px-6">
+              <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
+                <Timer />
+              </div>
+              <div className="ml-5">
+                <h2 className="font-medium text-xl">Total hashpower</h2>
+                <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+                  {hashes?.total} Terrahash
+                </p>
+              </div>
+            </div>
+            <div className="rounded-3xl flex-1 opacity-50 bg-[#121212] flex items-center py-4 px-6">
+              <div className="bg-white flex items-center justify-center rounded-full w-14 h-14">
+                <Bitcoin />
+              </div>
+              <div className="ml-5 flex-1 flex justify-between items-center">
+                <div>
+                  <h2 className="font-medium text-xl">Available Balance</h2>
+                  <p className="opacity-50 font-lighter text-2xl leading-[36px]">
+                    {Number(revenue.totalReward) - Number(revenue.redeemedReward)}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setShowWithdrawModal(true);
+                  }}
+                  className="bg-[#F5931B] rounded-xl px-8 py-3"
+                >
+                  Withdraw
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        <DonutChart balances={balances} hashes={hashes} />
+
+        {
+          showUpdateModal && (
+            <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} />
+          )
+        }
+
+        {
+          showWithDrawModal && (
+            <WithdrawModel setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo} />
+          )
+        }
+
       </div>
 
-      <DonutChart balances={balances} hashes={hashes} />
+      <Chart  revenue= {revenue}/>
 
-      {
-        showUpdateModal && (
-          <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} />
-        )
-      }
-
-      {
-        showWithDrawModal && (
-          <WithdrawModel setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo}/>
-        )
-      }
-
-    </div>
+    </>
   );
 };
 

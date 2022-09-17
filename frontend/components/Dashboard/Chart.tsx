@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 
 import {
   Chart as ChartJS,
@@ -12,7 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { ArrowDownOrange } from "../../assets/icons";
+// import { ArrowDownOrange } from "../../assets/icons";
 
 ChartJS.register(
   CategoryScale,
@@ -24,47 +24,47 @@ ChartJS.register(
   Filler,
   Legend
 );
-const options = {
-  responsive: true,
-  plugins: {
-    legend: { display: false },
-    title: {
-      display: false,
-      text: "Chart.js Line Chart",
-    },
-  },
-  maintainAspectRatio: false,
-};
 
-const labels = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "April",
-  "May",
-  "June",
-  "July",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-export const data = {
-  labels,
-  datasets: [
-    {
-      lineTension: 0.4,
-      fill: true,
-      label: "Dataset 2",
-      data: labels.map(() => Math.floor(Math.random() * 60)),
-      borderColor: "#F4931E",
-      backgroundColor: "#F4931E1A",
+const Chart = ({revenue}: any) => {
+  // const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+
+  const lables = Object.keys(revenue).slice(0, 31)
+  const allValues = Object.values(revenue).slice(0, 31) 
+  const values = allValues.map((val: any) => {
+    if (val !== "") {
+      return val;
+    }
+  })
+
+  // console.log("lables :", lables);
+  // console.log("values :", values);
+
+  const data = {
+    labels: lables,
+    datasets: [
+      {
+        lineTension: 0.4,
+        fill: true,
+        label: "BitStacker",
+        data: values,
+        borderColor: "#F4931E",
+        backgroundColor: "#F4931E1A",
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: revenue.sheetName,
+      },
     },
-  ],
-};
-const Chart = () => {
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    maintainAspectRatio: false,
+  };
+  
   return (
     <div className="bg-[#121212] rounded-3xl p-4">
       <div className="flex items-center justify-between">

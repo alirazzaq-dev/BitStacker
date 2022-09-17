@@ -1,54 +1,28 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { GoogleSpreadsheet } from 'google-spreadsheet';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import creds from "./findamatch-358008-c77c71fde322.json";
 import GSheetReader from 'g-sheets-api';
-
-
-
-type Data = {    
-    User: string;
-    totalTokens: string;
-    vipBlack: string;
-    vipBlue: SVGStringList;
-    black: string;
-    blue: string;
-    totalHashes: string
-    TotalReward: string
-    redeemedReward: string
-    redeemableReward: string
-    withdrawlRequest: string
-    SecretMessage: string
-}
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Data>
+    res: NextApiResponse<any>
 ) {
 
-    console.log("req: ", req.body);
+  console.log("req: ", req.body);
     const address = req.body.address;
     const options = {
         apiKey: 'AIzaSyBEz8Xen5ehx1qVEE0PsgFvRtq0sJmlo6U',
-        sheetId: '1MarRDOEqIK9EtBqACrxICnCDC6IOCWJdxUYktoJU2pY',
-        // sheetNumber: 1,
-        // sheetName: 'myCustomSheetName', // if sheetName is supplied, this will take precedence over sheetNumber
-        // returnAllResults: false,
+        sheetId: "1MarRDOEqIK9EtBqACrxICnCDC6IOCWJdxUYktoJU2pY",
+        sheetName: 'August2022', // if sheetName is supplied, this will take precedence over sheetNumber
         filter: {
-          'User': address,
-        //   'module description': 'introduction'
+          'addresses': address,
         },
-        // filterOptions: {
-        //   operator: 'or',
-        //   matching: 'loose'
-        // }
       }
 
       
     GSheetReader(
         options,
         (results: any) => {
-          console.log("results: ", results);
+          results[0].sheetName = 'August 2022';
+          console.log(results)
           return res.status(200).json(results)
         },
         (error: any) => {

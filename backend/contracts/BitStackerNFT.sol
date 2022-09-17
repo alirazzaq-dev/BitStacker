@@ -22,6 +22,19 @@ error TOKEN_NOT_EXIST();
 error BOTH_CANT_BE_TRUE();
 
 contract BitStackerNFT is Ownable, ERC1155Supply {
+    mapping(uint256 => uint256) private _totalSupply;
+
+    /**
+     * @dev Total amount of tokens in with a given id.
+     */
+    function totalSupply(uint256 id) public view virtual returns (uint256) {
+        return _totalSupply[id];
+    }
+
+    function exists(uint256 id) public view virtual returns (bool) {
+        return ERC1155Supply.totalSupply(id) > 0;
+    }
+
 
     uint public THForPresale = 120_000;
     uint public THForPublicsale = 40_000;
