@@ -49,13 +49,16 @@ export interface BitStackerNFTInterface extends utils.Interface {
     "balancesOf(address)": FunctionFragment;
     "black()": FunctionFragment;
     "blue()": FunctionFragment;
+    "changeWhiteListStatus(bool)": FunctionFragment;
     "contactInfo(address)": FunctionFragment;
     "exists(uint256)": FunctionFragment;
     "extendTerraHashes(uint256,uint256)": FunctionFragment;
     "hashesOf(address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "isWhiteListed(address)": FunctionFragment;
     "mint(uint8,uint256,(string,string))": FunctionFragment;
     "name()": FunctionFragment;
+    "onlyWhiteListed()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "resetContactInfo((string,string))": FunctionFragment;
@@ -74,6 +77,7 @@ export interface BitStackerNFTInterface extends utils.Interface {
     "uri(uint256)": FunctionFragment;
     "vipBlack()": FunctionFragment;
     "vipBlue()": FunctionFragment;
+    "whiteListUsers(address[])": FunctionFragment;
     "withdrawFunds()": FunctionFragment;
   };
 
@@ -86,13 +90,16 @@ export interface BitStackerNFTInterface extends utils.Interface {
       | "balancesOf"
       | "black"
       | "blue"
+      | "changeWhiteListStatus"
       | "contactInfo"
       | "exists"
       | "extendTerraHashes"
       | "hashesOf"
       | "isApprovedForAll"
+      | "isWhiteListed"
       | "mint"
       | "name"
+      | "onlyWhiteListed"
       | "owner"
       | "renounceOwnership"
       | "resetContactInfo"
@@ -111,6 +118,7 @@ export interface BitStackerNFTInterface extends utils.Interface {
       | "uri"
       | "vipBlack"
       | "vipBlue"
+      | "whiteListUsers"
       | "withdrawFunds"
   ): FunctionFragment;
 
@@ -137,6 +145,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "black", values?: undefined): string;
   encodeFunctionData(functionFragment: "blue", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "changeWhiteListStatus",
+    values: [PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "contactInfo",
     values: [PromiseOrValue<string>]
   ): string;
@@ -157,6 +169,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "isWhiteListed",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "mint",
     values: [
       PromiseOrValue<BigNumberish>,
@@ -165,6 +181,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "onlyWhiteListed",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -238,6 +258,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "vipBlack", values?: undefined): string;
   encodeFunctionData(functionFragment: "vipBlue", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "whiteListUsers",
+    values: [PromiseOrValue<string>[]]
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdrawFunds",
     values?: undefined
   ): string;
@@ -259,6 +283,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "black", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "blue", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "changeWhiteListStatus",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "contactInfo",
     data: BytesLike
   ): Result;
@@ -272,8 +300,16 @@ export interface BitStackerNFTInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "isWhiteListed",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "onlyWhiteListed",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -331,6 +367,10 @@ export interface BitStackerNFTInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "vipBlack", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "vipBlue", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "whiteListUsers",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "withdrawFunds",
     data: BytesLike
@@ -488,6 +528,11 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
+    changeWhiteListStatus(
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -524,6 +569,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    isWhiteListed(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -532,6 +582,8 @@ export interface BitStackerNFT extends BaseContract {
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    onlyWhiteListed(overrides?: CallOverrides): Promise<[boolean]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -629,6 +681,11 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
+    whiteListUsers(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     withdrawFunds(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -684,6 +741,11 @@ export interface BitStackerNFT extends BaseContract {
     }
   >;
 
+  changeWhiteListStatus(
+    newStatus: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   contactInfo(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -720,6 +782,11 @@ export interface BitStackerNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  isWhiteListed(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   mint(
     _category: PromiseOrValue<BigNumberish>,
     _amount: PromiseOrValue<BigNumberish>,
@@ -728,6 +795,8 @@ export interface BitStackerNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
+
+  onlyWhiteListed(overrides?: CallOverrides): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -821,6 +890,11 @@ export interface BitStackerNFT extends BaseContract {
     }
   >;
 
+  whiteListUsers(
+    addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   withdrawFunds(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -876,6 +950,11 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
+    changeWhiteListStatus(
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -912,6 +991,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    isWhiteListed(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -920,6 +1004,8 @@ export interface BitStackerNFT extends BaseContract {
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
+
+    onlyWhiteListed(overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1013,6 +1099,11 @@ export interface BitStackerNFT extends BaseContract {
       }
     >;
 
+    whiteListUsers(
+      addresses: PromiseOrValue<string>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     withdrawFunds(overrides?: CallOverrides): Promise<void>;
   };
 
@@ -1100,6 +1191,11 @@ export interface BitStackerNFT extends BaseContract {
 
     blue(overrides?: CallOverrides): Promise<BigNumber>;
 
+    changeWhiteListStatus(
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1127,6 +1223,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    isWhiteListed(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -1135,6 +1236,8 @@ export interface BitStackerNFT extends BaseContract {
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    onlyWhiteListed(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1212,6 +1315,11 @@ export interface BitStackerNFT extends BaseContract {
 
     vipBlue(overrides?: CallOverrides): Promise<BigNumber>;
 
+    whiteListUsers(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     withdrawFunds(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1243,6 +1351,11 @@ export interface BitStackerNFT extends BaseContract {
 
     blue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    changeWhiteListStatus(
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     contactInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1270,6 +1383,11 @@ export interface BitStackerNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    isWhiteListed(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     mint(
       _category: PromiseOrValue<BigNumberish>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -1278,6 +1396,8 @@ export interface BitStackerNFT extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    onlyWhiteListed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1358,6 +1478,11 @@ export interface BitStackerNFT extends BaseContract {
     vipBlack(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vipBlue(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    whiteListUsers(
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     withdrawFunds(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

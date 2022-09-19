@@ -3,27 +3,32 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
-import { ethers } from "hardhat";
+import { deployments, ethers } from "hardhat";
+import { BitStackerNFT } from "../typechain-types";
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
 
-  // We get the contract to deploy
-  // const Greeter = await ethers.getContractFactory("Greeter");
-  // const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const [deployer, user1, user2] = await ethers.getSigners();
 
-  // await greeter.deployed();
 
-  // console.log("Greeter deployed to:", greeter.address);
+  const BitStackerNFT = await deployments.get("BitStackerNFT");
+
+  const bitStackerNFT = new ethers.Contract(
+    BitStackerNFT.address,
+    BitStackerNFT.abi,
+    deployer
+  ) as BitStackerNFT;
+
+  const tx = await bitStackerNFT.whiteListUsers([deployer.address]);
+  await tx.wait(1);
+
+  console.log("User whitelisted", deployer.address);
+  
+
+
+
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;

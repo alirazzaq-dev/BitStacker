@@ -6,7 +6,6 @@ import "@nomiclabs/hardhat-waffle";
 
 require("dotenv").config();
 
-
 const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL || "https://eth-mainnet.alchemyapi.io/v2/your-api-key"
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0x11ee3108a03081fe260ecdc106554d09d9d1209bcafd46942b10e02943effc4a"
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || ""
@@ -49,8 +48,8 @@ module.exports = {
   },
   typechain: {
     outDir: '../frontend/types',
-    // outDir: './typechain',
-    target: 'ethers-v5',
+    // outDir: './typechain-types',
+    // target: 'ethers-v5',
     // alwaysGenerateOverloads: false, // should overloads with full signatures like deposit(uint256) be generated always, even if there are no overloads?
     // externalArtifacts: ['externalArtifacts/*.json'], // optional array of glob patterns with external artifacts to process (for example external libs from node_modules)
     // dontOverrideCompile: false // defaults to true for javascript projects

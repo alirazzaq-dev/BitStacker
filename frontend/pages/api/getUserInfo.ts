@@ -6,7 +6,7 @@ export default async function handler(
     res: NextApiResponse<any>
 ) {
 
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
     const address = req.body.address;
     const options = {
         apiKey: 'AIzaSyBEz8Xen5ehx1qVEE0PsgFvRtq0sJmlo6U',
@@ -22,7 +22,7 @@ export default async function handler(
         options,
         (results: any) => {
           results[0].sheetName = 'August 2022';
-          console.log(results)
+          // console.log(results)
           return res.status(200).json(results)
         },
         (error: any) => {

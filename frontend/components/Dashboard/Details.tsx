@@ -202,7 +202,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl">Total BTC Earned</h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    {revenue.totalReward}
+                    { revenue.totalReward ?? 0 }
                   </p>
                 </div>
                 <ChartIcon />
@@ -217,7 +217,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl"> Redeemed </h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    {revenue.redeemedReward}
+                    { revenue.redeemedReward ?? 0 }
                   </p>
                 </div>
                 <ChartIcon />
@@ -233,7 +233,7 @@ const Details = () => {
               <div className="ml-5">
                 <h2 className="font-medium text-xl">Total hashpower</h2>
                 <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                  {hashes?.total} Terrahash
+                  { hashes?.total } Terrahash
                 </p>
               </div>
             </div>
@@ -245,7 +245,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl">Available Balance</h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    {Number(revenue.totalReward) - Number(revenue.redeemedReward)}
+                    { Number(revenue.totalReward ?? 0) - Number(revenue.redeemedReward ?? 0) }
                   </p>
                 </div>
 

@@ -143,11 +143,9 @@ const Minting = () => {
 
   const handleMint = async () => {
     console.log("Minting...")
-
     setIsMinting(true);
 
-
-    if (provider) {
+    if (provider && account) {
       try {
         const signer = provider.getSigner();
         const contract = new Contract(
@@ -155,6 +153,14 @@ const Minting = () => {
           abis.BitStackerNFT,
           signer
         ) as BitStackerNFT;
+
+        const isWhiteListingActive = await contract.onlyWhiteListed();
+        const isUserWhiteListed = await contract.isWhiteListed(account);
+        
+        if(isWhiteListingActive && !isUserWhiteListed){
+          alert("You are not whitelisted.")
+          throw("NOT_WHITELISTED");
+        }
 
         const validbitcoin = ValidateBitcoinAddress(addresses.bitcoin);
         if (!validbitcoin) {

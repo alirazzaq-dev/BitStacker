@@ -20,23 +20,14 @@ error NULL_BALANCE();
 error UNABLE_TO_TRANSFER_FUNDS();
 error TOKEN_NOT_EXIST();
 error BOTH_CANT_BE_TRUE();
+error ONLY_WHITELISTED_ALLOWED();
 
 contract BitStackerNFT is Ownable, ERC1155Supply {
-    mapping(uint256 => uint256) private _totalSupply;
+    // mapping(uint256 => uint256) private _totalSupply;
+    bool public onlyWhiteListed = false;
+    mapping(address => bool) public isWhiteListed;
 
-    /**
-     * @dev Total amount of tokens in with a given id.
-     */
-    function totalSupply(uint256 id) public view virtual returns (uint256) {
-        return _totalSupply[id];
-    }
-
-    function exists(uint256 id) public view virtual returns (bool) {
-        return ERC1155Supply.totalSupply(id) > 0;
-    }
-
-
-    uint public THForPresale = 120_000;
+    uint public THForPresale = 40_000;
     uint public THForPublicsale = 40_000;
     uint public totalTerraHashes = THForPresale + THForPublicsale;
 
@@ -48,10 +39,10 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
 
 
     // Types of tokens  -> For Testnet
-    Tokentype public vipBlack = Tokentype(0, 40, 2 ether, 0);
-    Tokentype public vipBlue = Tokentype(1, 4, 0.2 ether, 0);
-    Tokentype public black = Tokentype(2, 20, 1 ether, 0);
-    Tokentype public blue = Tokentype(3, 4, 0.2 ether, 0);
+    Tokentype public vipBlack = Tokentype(0, 40, 0 ether, 0);
+    Tokentype public vipBlue = Tokentype(1, 4, 0 ether, 0);
+    Tokentype public black = Tokentype(2, 20, 0 ether, 0);
+    Tokentype public blue = Tokentype(3, 4, 0 ether, 0);
 
     string public name = "BitStacker Tokens";
     string private baseURL = "https://ipfs.io/ipfs/QmeVoaJp5pZbEboNLsZAV7DnXsFHZRmbvQ3RendamWoXX1/";
@@ -84,6 +75,10 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         ) payable public {
 
         if(saleType == SaleTpe.CLOSED) revert SALE_IS_NOT_LIVE();
+
+        if(onlyWhiteListed && !isWhiteListed[msg.sender]) {
+            revert ONLY_WHITELISTED_ALLOWED();
+        }
 
         if(saleType == SaleTpe.PRIVATE){
 
@@ -188,6 +183,16 @@ contract BitStackerNFT is Ownable, ERC1155Supply {
         _vipBlueHash = (balanceOf(user, 1))*vipBlue.hashRate;
         _blackHash = (balanceOf(user, 2))*black.hashRate;
         _blueHash = (balanceOf(user, 3))*blue.hashRate;
+    }
+
+    function whiteListUsers(address[] memory addresses) public onlyOwner {
+        for(uint8 i; i < addresses.length; i++){
+            isWhiteListed[addresses[i]] = true;
+        }
+    }
+
+    function changeWhiteListStatus(bool newStatus) public onlyOwner {
+        onlyWhiteListed = newStatus;
     }
 
 

@@ -8,7 +8,7 @@ const abis = require("../../frontend/utils/abis.json");
 
 
 const fileName = "bitstacker.xlsx"
-const sheetName = "August2022"
+const sheetName = "Sep2022"
 const date = 5
 
 const filePath = `./${fileName}`;

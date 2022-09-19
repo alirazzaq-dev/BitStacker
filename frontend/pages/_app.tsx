@@ -6,7 +6,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider, ExternalProvider } from "@ethersproject/providers";
 
 const getLibrary = (provider: ExternalProvider) => {
-  return new Web3Provider(provider);
+    return new Web3Provider(provider);
 };
 
 declare global {

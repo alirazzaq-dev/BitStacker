@@ -1,8 +1,11 @@
-
-# dependencies
 node_modules
-typechain
-coverage
-artifacts
-cache
 .env
+coverage
+coverage.json
+typechain
+typechain-types
+
+#Hardhat files
+cache
+artifacts
+

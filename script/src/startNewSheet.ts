@@ -8,7 +8,7 @@ import {holders} from "./holders";
 var workbook = new Workbook();
 
 const filePath = "./bitstacker.xlsx";
-const sheetname = "aug2022";
+const sheetname = "Sep2022";
 
 const worksheet = workbook.addWorksheet(sheetname);
 worksheet.columns = [
