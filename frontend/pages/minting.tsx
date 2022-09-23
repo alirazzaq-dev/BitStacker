@@ -18,13 +18,19 @@ import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
 
 
-const image0 = "/assets/images/0.png";
-const image1 = "/assets/images/1.png";
-const image2 = "/assets/images/2.gif";
-const image3 = "/assets/images/3.gif";
+import image0 from "../public/assets/images/0.png";
+import image1 from "../public/assets/images/1.png";
+import image2 from "../public/assets/images/2.gif";
+import image3 from "../public/assets/images/3.gif";
+
+// const image0 = "../public/assets/images/0.png";
+// const image1 = "../public/assets/images/1.png";
+// const image2 = "../public/assets/images/2.gif";
+// const image3 = "../public/assets/images/3.gif";
 
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  console.log("Imagessss")
   return {
     props: {
       data: "SSG",
@@ -109,7 +115,7 @@ const Minting = () => {
         }
         else if (saleType === SaleType.PUBLIC) {
           setSelectedToken(TokenType.BLACK)
-          setImage(image3)
+          setImage(image2)
 
         }
 
