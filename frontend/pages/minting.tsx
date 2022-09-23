@@ -13,10 +13,18 @@ import contractAddresses from "../utils/contractAddresses.json";
 import abis from "../utils/abis.json";
 import { InjectedConnector } from "@web3-react/injected-connector";
 
-import { image0, image1, image2, image3 } from "../assets/images";
+import { image0, image1, image2, image3 } from "../public/assets/images/index";
+
 import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
+
+// const image0 = require("./assets/images/0.png");
+// const image1 = require("./assets/images/1.png");
+// const image2 = require("./assets/images/2.png");
+// const image3 = require("./assets/images/3.png");
+// import image0 from "../public/assets/images/index"
+
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
@@ -70,7 +78,7 @@ const Minting = () => {
   const [addresses, setAddresses] = useState({ bitcoin: "", email: "" });
   const [isMinting, setIsMinting] = useState(false);
   const [balance, setBalance] = useState("0.0000");
-  // const mintingLoader = getLoader("Minting");
+  const mintingLoader = getLoader("Minting");
 
   const fetchContractDetails = async () => {
     if (provider && account) {
@@ -388,7 +396,7 @@ const Minting = () => {
                   style={{padding: "10px"}}
                   className="bg-transparent text-[#F7931B] text-base mt-2 w-full border-2 border-[#F7931B] rounded-full py-5 px-32"
                 >
-                  {isMinting ? "Minting..." : "Mint"}
+                  {isMinting ? mintingLoader : "Mint"}
                 </button>
               </div>
 
@@ -435,13 +443,13 @@ const Minting = () => {
         <SmallFooter />
 
         <div style={{ margin: 10}}>
-        <div>For Testing</div>
+        {/* <div>For Testing</div>
         <div style={{ height: "10vh", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
           <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
           <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
           <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
-        </div>
-        </div>
+        </div>*/}
+        </div> 
 
 
       </div>

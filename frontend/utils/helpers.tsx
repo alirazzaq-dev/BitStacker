@@ -43,7 +43,7 @@
 //     else return address;
 // } 
 
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 
 
 export const ValidateEmail = (email: string) => {
@@ -67,5 +67,13 @@ export const ValidateBitcoinAddress = (address: string) => {
 
 
 export const getLoader = (text: string) => {
-    return <Flex alignItems="center" justifyContent = "center" border="1px solid red" h={50}>  <Spinner size="lg" /> </Flex>
+    return (
+        <Flex
+            alignItems="center"
+            justifyContent="center"
+            h={50}
+        >
+            <Box mr={5}> {text} </Box> <Spinner size="lg" />
+        </Flex>
+    )
 }
