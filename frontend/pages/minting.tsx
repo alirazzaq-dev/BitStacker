@@ -78,6 +78,8 @@ const Minting = () => {
   const [isMinting, setIsMinting] = useState(false);
   const [balance, setBalance] = useState("0.0000");
   const mintingLoader = getLoader("Minting");
+  const [image, setImage] = useState(image2)
+
 
   const fetchContractDetails = async () => {
     if (provider && account) {
@@ -103,9 +105,13 @@ const Minting = () => {
         }
         else if (saleType === SaleType.PRIVATE) {
           setSelectedToken(TokenType.VIPBLACK)
+          setImage(image0)
+
         }
         else if (saleType === SaleType.PUBLIC) {
           setSelectedToken(TokenType.BLACK)
+          setImage(image3)
+
         }
 
         setTokens({ vipBlack, vipBlue, black, blue });
@@ -238,7 +244,6 @@ const Minting = () => {
   }, [provider]);
 
 
-
   const handleType = async (type: SaleType) => {
     if (provider) {
       const signer = provider.getSigner();
@@ -309,7 +314,28 @@ const Minting = () => {
                   id="tokenType"
                   className="ml-5 w-fit-content bg-transparent font-bold text-lg outline-none p-0"
                   defaultValue={selectedToken}
-                  onChange={(e) => setSelectedToken(Number(e.target.value))}
+                  onChange={(e) => {
+                    setSelectedToken(Number(e.target.value))
+                    
+                    switch (Number(e.target.value)){
+                      case 0:
+                        setImage(image0)
+                        break
+                      case 1:
+                        setImage(image1)
+                        break
+                      case 2:
+                        setImage(image2)
+                        break
+                      case 3:
+                        setImage(image3)
+                        break
+                      case 4:
+                        setImage(image0)
+                        break
+                    }
+
+                  }}
                 >
                   {
                     saleType === SaleType.PRIVATE && (
@@ -427,11 +453,11 @@ const Minting = () => {
                     height={500}
                     alt="minting-banner"
                     priority={true}
-                    src={
-                      selectedToken === TokenType.VIPBLACK ? image0 :
-                        selectedToken === TokenType.VIPBLUE ? image1 :
-                          selectedToken === TokenType.BLACK ? image2 :
-                            selectedToken === TokenType.BLUE ? image3 : image0
+                    src={image
+                      // selectedToken === TokenType.VIPBLACK ? image0 :
+                      //   selectedToken === TokenType.VIPBLUE ? image1 :
+                      //     selectedToken === TokenType.BLACK ? image2 :
+                      //       selectedToken === TokenType.BLUE ? image3 : image0
                     }
                   />
                 </div>
