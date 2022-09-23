@@ -13,17 +13,15 @@ import contractAddresses from "../utils/contractAddresses.json";
 import abis from "../utils/abis.json";
 import { InjectedConnector } from "@web3-react/injected-connector";
 
-import { image0, image1, image2, image3 } from "../public/assets/images/index";
-
 import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
 
-// const image0 = require("./assets/images/0.png");
-// const image1 = require("./assets/images/1.png");
-// const image2 = require("./assets/images/2.png");
-// const image3 = require("./assets/images/3.png");
-// import image0 from "../public/assets/images/index"
+// import { image0, image1, image2, image3 } from "../public/assets/images/index";
+const image0 = require("../public/assets/images/0.png");
+const image1 = require("../public/assets/images/1.png");
+const image2 = require("../public/assets/images/2.gif");
+const image3 = require("../public/assets/images/3.gif");
 
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -443,12 +441,12 @@ const Minting = () => {
         <SmallFooter />
 
         <div style={{ margin: 10}}>
-        {/* <div>For Testing</div>
+        <div>For Testing</div>
         <div style={{ height: "10vh", border: "1px solid red", display: "flex", justifyContent: "space-around" }}>
           <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
           <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
           <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
-        </div>*/}
+        </div>
         </div> 
 
 
