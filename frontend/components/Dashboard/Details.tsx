@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import contractAddresses from "../../utils/contractAddresses.json";
 import abis from "../../utils/abis.json";
 import { BitStackerNFT } from "../../types";
-import { Bitcoin, Chart as ChartIcon, Etherum, Timer } from "../../assets/icons";
+import { Bitcoin, Chart as ChartIcon, Etherum, Timer } from "../../public/assets/icons";
 import Chart from "./Chart";
 import UpdateModel from "./UpdateModel";
 import WithdrawModel from "./WithdrawModel";

@@ -1,5 +1,5 @@
 import React, { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
-import { Corss } from "../../assets/icons";
+import { Corss } from "../../public/assets/icons";
 import { BitStackerNFT } from '../../types';
 import contractAddresses from "../../utils/contractAddresses.json";
 import abis from "../../utils/abis.json";

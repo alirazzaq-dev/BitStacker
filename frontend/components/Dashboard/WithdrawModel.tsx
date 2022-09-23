@@ -1,5 +1,5 @@
 import React, { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react'
-import { Corss } from "../../assets/icons";
+import { Corss } from "../../public/assets/icons";
 import { SMTPClient } from 'emailjs';
 import axios from 'axios';
 import { errorNotify, promiseNotify, successNotify } from '../../utils/toasts';
