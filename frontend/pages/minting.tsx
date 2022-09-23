@@ -17,7 +17,6 @@ import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
 
-// import { image0, image1, image2, image3 } from "../public/assets/images/index";
 
 const image0 = "/assets/images/0.png";
 const image1 = "/assets/images/1.png";
@@ -453,15 +452,9 @@ const Minting = () => {
                     height={500}
                     alt="minting-banner"
                     priority={true}
-                    src={image
-                      // selectedToken === TokenType.VIPBLACK ? image0 :
-                      //   selectedToken === TokenType.VIPBLUE ? image1 :
-                      //     selectedToken === TokenType.BLACK ? image2 :
-                      //       selectedToken === TokenType.BLUE ? image3 : image0
-                    }
+                    src={ image }
                   />
                 </div>
-
               </div>
             </div>
           </div>
