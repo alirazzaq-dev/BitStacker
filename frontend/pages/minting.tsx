@@ -18,10 +18,11 @@ import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
 
 // import { image0, image1, image2, image3 } from "../public/assets/images/index";
-const image0 = require("../public/assets/images/0.png");
-const image1 = require("../public/assets/images/1.png");
-const image2 = require("../public/assets/images/2.gif");
-const image3 = require("../public/assets/images/3.gif");
+
+const image0 = "/assets/images/0.png";
+const image1 = "/assets/images/1.png";
+const image2 = "/assets/images/2.gif";
+const image3 = "/assets/images/3.gif";
 
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -425,6 +426,7 @@ const Minting = () => {
                     width={800}
                     height={500}
                     alt="minting-banner"
+                    priority={true}
                     src={
                       selectedToken === TokenType.VIPBLACK ? image0 :
                         selectedToken === TokenType.VIPBLUE ? image1 :
