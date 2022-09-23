@@ -451,7 +451,6 @@ const Minting = () => {
                     width={800}
                     height={500}
                     alt="minting-banner"
-                    priority={true}
                     src={ image }
                   />
                 </div>

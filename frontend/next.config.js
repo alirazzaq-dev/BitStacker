@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: false,
   swcMinify: false,
   images: {
-    domains: ['bitstacker.netlify.app']
-}
+    unoptimized: true,
+  }
 
 }
 
