@@ -4,9 +4,12 @@ import { Wrapper } from "../components";
 import "../styles/globals.css";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider, ExternalProvider } from "@ethersproject/providers";
+import { ChakraProvider } from "@chakra-ui/react";
+import { ToastContainer } from "react-toastify";
+
 
 const getLibrary = (provider: ExternalProvider) => {
-    return new Web3Provider(provider);
+  return new Web3Provider(provider);
 };
 
 declare global {
@@ -25,7 +28,21 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       <Web3ReactProvider getLibrary={getLibrary}>
-        <Component {...pageProps} />
+        <ChakraProvider>
+          <ToastContainer
+            toastStyle={{ backgroundColor: "black" }}
+            position="bottom-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <Component {...pageProps} />
+        </ChakraProvider>
       </Web3ReactProvider>
     </Wrapper>
   );

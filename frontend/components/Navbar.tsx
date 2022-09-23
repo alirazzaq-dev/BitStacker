@@ -10,6 +10,24 @@ const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 31337],
 });
 
+const handleNetworkChange = async () => {
+  console.log("CHANGING NETWORK");
+
+  await window.ethereum.request({
+    method: "wallet_switchEthereumChain",
+    params: [
+      {
+        chainId: "0x" + contractData.chainId.toString(16), //31337
+      },
+    ],
+  });
+
+  console.log("NETWORK CHANGED");
+
+  /// Reference: https://stackoverflow.com/questions/68252365/how-to-trigger-change-blockchain-network-request-on-metamask
+};
+
+
 const Navbar = () => {
   const {
     active,
@@ -42,16 +60,23 @@ const Navbar = () => {
     }
   };
 
-  const checkCain = async () => {
+  const checkNetwork = async () => {
     if (chainId && chainId !== contractData.chainId) {
-      alert(`This App only works on chianid: ${contractData.chainId}. Please switch your chian`);
-      throw ("WRONG Chain")
+      const input = confirm(
+        `Allow us to change your network Id from ${chainId} to ${contractData.chainId}`
+      );
+      if (input) {
+        handleNetworkChange();
+      }
     }
-  }
+  };
+
+  useEffect(() => {
+    checkNetwork();
+  }, [chainId]);
 
 
   useEffect(() => {
-    checkCain();
     fetchEthBalance();
   }, [provider]);
 

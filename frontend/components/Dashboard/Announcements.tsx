@@ -1,6 +1,39 @@
+import axios from "axios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 
 const Announcements = () => {
+
+  type Announcements = {
+    announcements: string[];
+    dates: string[];
+  }
+
+  const [announcements, setAnnouncements] = useState<Announcements>();
+  const [loading, setLoading] = useState(false);
+
+  const fetchAnnoucements = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/api/getAnnouncements");
+      console.log("data", res.data)
+      setAnnouncements({
+        announcements: (Object.values(res.data.announcements) as string[]).reverse(),
+        dates: (Object.values(res.data.dates) as string[]).reverse()
+      })
+      setLoading(false);
+    }
+    catch (e) {
+      console.error(e);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchAnnoucements();
+  }, []);
+
   return (
     <div className="bg-gradient-to-r	from-[#F5931B] top-[#00000000] p-px rounded-lg overflow-hidden">
       <div className="bg-[#121212] p-4 rounded-lg">
@@ -14,38 +47,31 @@ const Announcements = () => {
             <h1>
               <span className="text-[#F4931E]">Announ</span>cements 🎉
             </h1>
+
             <div className="mt-5 space-y-1 ml-4">
-              <div className="flex">
-                <h2 className="font-bold text-sm mr-4">14 April, 2022</h2>
-                <p className="text-[#C1C1C1] font-normal text-sm">
-                  <span className="text-[#F4931E]">New submissions</span> for
-                  Bitstacker Launchpad:
-                </p>
-              </div>
-              <div className="flex">
-                <h2 className="font-bold text-sm mr-4">28 April, 2022</h2>
-                <p className="text-[#C1C1C1] font-normal text-sm">
-                  2nd mining round for existing Holders is now{" "}
-                  <span className="text-[#25FF62]">Open</span>
-                </p>
-              </div>
-              <div className="flex">
-                <h2 className="font-bold text-sm mr-4">04 May, 2022</h2>
-                <p className="text-[#C1C1C1] font-normal text-sm">
-                  2nd mining round for existing Holders is now{" "}
-                  <span className="text-[#FF4242]">Close</span>
-                </p>
-              </div>
+
+              {
+                loading ? (
+                  <Flex w="1200px" justifyContent="center" m={10}> <Spinner size="lg" /> </Flex>
+                ) :
+                  announcements?.announcements.map((announcement, index) => (
+                    <div className="flex" key={index}>
+                      <h2 className="font-bold text-sm mr-4">{announcements?.dates[index]}</h2>
+                      <p className="text-[#C1C1C1] font-normal text-sm">
+                        {announcement}
+                      </p>
+                    </div>
+                  ))
+              }
             </div>
+
           </div>
 
-          {/* <div className="flex-1">
-            <img alt="dots" src={"/assets/pictures/dots.png"} />
-          </div> */}
-          <p className="font-normal text-sm text-[#C1C1C1] mt-8">
+          {/* <p className="font-normal text-sm text-[#C1C1C1] mt-8">
             Please submit your{" "}
             <span className="underline text-[#fff]">votes</span> below
-          </p>
+          </p> */}
+
         </div>
       </div>
     </div>

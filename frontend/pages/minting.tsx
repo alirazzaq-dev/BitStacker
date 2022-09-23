@@ -15,6 +15,8 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 
 import { image0, image1, image2, image3 } from "../assets/images";
 import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
+import { promiseNotify, successNotify } from "../utils/toasts";
+import { getLoader } from "../utils/helpers";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   return {
@@ -68,6 +70,7 @@ const Minting = () => {
   const [addresses, setAddresses] = useState({ bitcoin: "", email: "" });
   const [isMinting, setIsMinting] = useState(false);
   const [balance, setBalance] = useState("0.0000");
+  // const mintingLoader = getLoader("Minting");
 
   const fetchContractDetails = async () => {
     if (provider && account) {
@@ -183,19 +186,26 @@ const Minting = () => {
             throw ("Balance is insufficient")
           }
 
-          const tx = await contract.mint(
-            selectedToken,
-            quantity,
+          const tx = contract.mint( selectedToken, quantity,
             {
               bitCoinAddress: addresses.bitcoin,
               emailAddress: addresses.email,
             },
             { value: ethers.utils.parseEther(value) }
           );
-          await tx.wait(1);
+
+          const txx = await promiseNotify(
+            tx,
+            "Transaction initiated",
+            "Waitng for the response",
+            "Error"
+          )
+          await txx.wait(1);
+
+          successNotify("Minting Successful. Congratulations")
+
           fetchContractDetails();
           setIsMinting(false);
-          alert("Success. Congratulations.");
 
         } else {
           alert("Please fill in your BitCoin and Email address before minting");
@@ -375,9 +385,10 @@ const Minting = () => {
                 <button
                   onClick={handleMint}
                   disabled={!active || selectedToken === TokenType.CLOSED || isMinting}
+                  style={{padding: "10px"}}
                   className="bg-transparent text-[#F7931B] text-base mt-2 w-full border-2 border-[#F7931B] rounded-full py-5 px-32"
                 >
-                  {isMinting ? "Minting . . . " : "Mint"}
+                  {isMinting ? "Minting..." : "Mint"}
                 </button>
               </div>
 

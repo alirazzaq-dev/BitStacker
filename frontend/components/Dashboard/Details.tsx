@@ -16,7 +16,7 @@ let defaultRevenue = {
   9: "", 10: "", 11: "", 12: "", 13: "", 14: "", 15: "", 16: "",
   17: "", 18: "", 19: "", 20: "", 21: "", 22: "", 23: "", 24: "",
   25: "", 26: "", 27: "", 28: "", 29: "", 30: "", 31: "", sheetName: "",
-  addresses: "", redeemedReward: "0", totalReward: "0", totalRewardLastMonth: "0"
+  addresses: "", redeemedReward: "0", totalReward: "0", totalRewardLastMonth: "0", availableBalance: "0"
 }
 
 
@@ -124,7 +124,9 @@ const Details = () => {
     try {
       const res = await axios.post("/api/getUserInfo", { address: account });
       const data: any = res.data[0] as Object;
-      setRevenue(data);
+      // setRevenue(data);
+      setRevenue({...data, availableBalance: Number(data.totalReward ?? 0) - Number(data.redeemedReward ?? 0)})
+       
       // console.log("data", data)
     }
     catch (e) {
@@ -145,6 +147,7 @@ const Details = () => {
       document.body.style.overflow = "unset";
     }
   }, [showWithDrawModal]);
+
 
 
   // https://docs.google.com/spreadsheets/d/1MarRDOEqIK9EtBqACrxICnCDC6IOCWJdxUYktoJU2pY/edit#gid=0
@@ -245,7 +248,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl">Available Balance</h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    { Number(revenue.totalReward ?? 0) - Number(revenue.redeemedReward ?? 0) }
+                    { revenue.availableBalance }
                   </p>
                 </div>
 
@@ -266,13 +269,13 @@ const Details = () => {
 
         {
           showUpdateModal && (
-            <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} />
+            <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} contactInfo={contactInfo}/>
           )
         }
 
         {
           showWithDrawModal && (
-            <WithdrawModel setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo} />
+            <WithdrawModel userAddress={account!} setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo} availableBalance= {revenue.availableBalance} />
           )
         }
 

@@ -6,20 +6,25 @@ import abis from "../../utils/abis.json";
 import { useWeb3React } from "@web3-react/core";
 import { Contract, ethers } from "ethers";
 import { ValidateBitcoinAddress, ValidateEmail } from '../../utils/helpers';
+import { promiseNotify, successNotify } from '../../utils/toasts';
 
 
 const UpdateModel = (
-    { setShowUpdateModal, setContactInfo }:
+    { setShowUpdateModal, setContactInfo, contactInfo }:
         {
             setShowUpdateModal: React.Dispatch<React.SetStateAction<boolean>>,
             setContactInfo: Dispatch<SetStateAction<{ bitCoinAddress: string; emailAddress: string; }>>
+            contactInfo: {
+                bitCoinAddress: string;
+                emailAddress: string;
+            }
         }
 ) => {
 
     const { library: provider } = useWeb3React<ethers.providers.JsonRpcProvider>();
     const [updatedContactInfo, setUpdatedContactInfo] = useState({
-        bitCoinAddress: "",
-        emailAddress: "",
+        bitCoinAddress: contactInfo.bitCoinAddress,
+        emailAddress: contactInfo.emailAddress,
     });
 
     const handleUpdatedContactInfo = (val: string, type: "bitcoin" | "email") => {
@@ -34,6 +39,7 @@ const UpdateModel = (
 
     const submitUpdatedContactInfo = async (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
+
         setUpdatingContactInfo(true);
         const validEmail = ValidateEmail(updatedContactInfo.emailAddress);
         if (!validEmail) {
@@ -57,11 +63,20 @@ const UpdateModel = (
                     signer
                 ) as BitStackerNFT;
 
-                const tx = await contract.resetContactInfo({
+                const tx = contract.resetContactInfo({
                     bitCoinAddress: updatedContactInfo.bitCoinAddress,
                     emailAddress: updatedContactInfo.emailAddress,
                 });
-                await tx.wait(1);
+
+                const txx = await promiseNotify(
+                    tx,
+                    "Transaction initiated",
+                    "Successfully submitted. Please wait for the response",
+                    "Error"
+                );
+
+                await txx.wait(1);
+                successNotify("Contract info updated sucessfully");
 
                 setContactInfo({
                     bitCoinAddress: updatedContactInfo.bitCoinAddress,
@@ -84,10 +99,7 @@ const UpdateModel = (
                     <h1 className="font-bold text-xl">
                         Update <span className="text-[#F7931B]">Personal Info</span>
                     </h1>
-                    <div
-                        onClick={() => {
-                            setShowUpdateModal(false);
-                        }}
+                    <div onClick={() => { setShowUpdateModal(false) }}
                         className="bg-[#FF5B5B] cursor-pointer bg-opacity-5 rounded-full w-10 h-10 flex items-center justify-center"
                     >
                         <Corss />
