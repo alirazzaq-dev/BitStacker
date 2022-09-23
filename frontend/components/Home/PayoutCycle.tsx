@@ -68,7 +68,7 @@ const PayoutCycle = () => {
               <div className="mt-5">
                 <div className="flex items-center">
                   <Tick />
-                  <p className="ml-2">Take snapshot of hloding wallets</p>
+                  <p className="ml-2">Take snapshot of holding wallets</p>
                 </div>
                 <div className="flex items-center">
                   <Tick />
