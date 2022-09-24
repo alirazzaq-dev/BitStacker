@@ -1,5 +1,5 @@
 import React, { Dispatch, MouseEvent, SetStateAction, useState } from 'react'
-import { Corss } from "../../public/assets/icons";
+import { Corss } from "../../assests/icons";
 import { BitStackerNFT } from '../../types';
 import contractAddresses from "../../utils/contractAddresses.json";
 import abis from "../../utils/abis.json";
@@ -116,7 +116,7 @@ const UpdateModel = (
                             className="w-full bg-transparent outline-none font-medium text-lg"
                         />
                         <p className="absolute -top-4 left-7  font-light text-base px-1 bg-[#121212]">
-                            <span className="opacity-50">New Bitcoin Address</span>
+                            <span className="opacity-50">New BTC withdrawal address</span>
                         </p>
                     </div>
                     <div className="w-full relative border border-[#595959] rounded-[50px] py-4 px-6 my-1">

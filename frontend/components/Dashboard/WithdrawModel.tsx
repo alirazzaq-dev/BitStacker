@@ -1,5 +1,5 @@
 import React, { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react'
-import { Corss } from "../../public/assets/icons";
+import { Corss } from "../../assests/icons";
 import { SMTPClient } from 'emailjs';
 import axios from 'axios';
 import { errorNotify, promiseNotify, successNotify } from '../../utils/toasts';
@@ -80,7 +80,7 @@ const WithdrawModel = (
                         <div className="my-4">
                             <div className="flex ">
                                 <h2 className="font-semibold text-xl">
-                                    Bitcoin Address:{" "}
+                                    BTC withdrawal address:{" "}
                                     <span className="opacity-70 font-normal text-base">
                                         {" "}
                                         {contactInfo.bitCoinAddress}

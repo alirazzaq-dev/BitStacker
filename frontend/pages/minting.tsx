@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { useState } from "react";
 import { Navbar, Sidebar, SmallFooter } from "../components";
-import { ArrowLeft, ArrowRight, Play } from "../public/assets/icons";
+import { ArrowLeft, ArrowRight, Play } from "../assests/icons";
 import { GetStaticProps } from "next";
 import { useWeb3React } from "@web3-react/core";
 import { BigNumber, Contract, ethers } from "ethers";
@@ -24,17 +24,6 @@ import image0 from "../public/assets/images/0.png";
 import image1 from "../public/assets/images/1.png";
 import image2 from "../public/assets/images/2.gif";
 import image3 from "../public/assets/images/3.gif";
-
-// const image0 = "../public/assets/images/0.png";
-// const image1 = "../public/assets/images/1.png";
-// const image2 = "../public/assets/images/2.gif";
-// const image3 = "../public/assets/images/3.gif";
-
-// const image0 = "/assets/images/0.png";
-// const image1 = "/assets/images/1.png";
-// const image2 = "/assets/images/2.gif";
-// const image3 = "/assets/images/3.gif";
-
 
 export const getStaticProps: GetStaticProps = async (context) => {
   console.log("Imagessss")

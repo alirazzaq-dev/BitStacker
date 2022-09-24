@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
-import { Logout } from "../public/assets/icons";
+import { Logout } from "../assests/icons";
 
 enum NavTabId {
   Home,

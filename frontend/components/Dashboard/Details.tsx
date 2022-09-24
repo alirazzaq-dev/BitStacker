@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import contractAddresses from "../../utils/contractAddresses.json";
 import abis from "../../utils/abis.json";
 import { BitStackerNFT } from "../../types";
-import { Bitcoin, Chart as ChartIcon, Etherum, Timer } from "../../public/assets/icons";
+import { Bitcoin, Chart as ChartIcon, Etherum, Timer } from "../../assests/icons";
 import Chart from "./Chart";
 import UpdateModel from "./UpdateModel";
 import WithdrawModel from "./WithdrawModel";
@@ -164,7 +164,7 @@ const Details = () => {
             </div>
 
             <div className="ml-5">
-              <h2 className="font-medium text-xl">Ethereum Wallet Address:</h2>
+              <h2 className="font-medium text-xl">NFT holding wallet</h2>
               <p className="opacity-50 font-lighter text-2xl leading-[36px]">
                 {account}
               </p>
@@ -174,7 +174,7 @@ const Details = () => {
           <div className="rounded-3xl bg-[#121212] justify-between flex items-center py-4 px-6">
             <div className="flex flex-col">
               <div className="flex items-center">
-                <h2 className="font-medium text-xl">BitCoin Address:</h2>
+                <h2 className="font-medium text-xl">BTC withdrawal address:</h2>
                 <p className="opacity-50 font-lighter ml-4 text-base leading-[36px]">
                   {contactInfo.bitCoinAddress}
                 </p>

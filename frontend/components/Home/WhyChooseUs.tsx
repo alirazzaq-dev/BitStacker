@@ -6,7 +6,7 @@ import {
   SettingLock,
   TopRight,
   Transfer,
-} from "../../public/assets/icons";
+} from "../../assests/icons";
 
 const WhyChooseUs = () => {
   return (

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Discord } from "../public/assets/icons";
+import { Discord } from "../assests/icons";
 const FooterItems = [
   {
     text: "Home",

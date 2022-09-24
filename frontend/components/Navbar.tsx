@@ -3,7 +3,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
-import { Bell, Close, Etherum } from "../public/assets/icons";
+import { Bell, Close, Etherum } from "../assests/icons";
 import contractData from "../utils/contractAddresses.json"
 
 const injected = new InjectedConnector({

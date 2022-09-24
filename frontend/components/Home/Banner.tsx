@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight } from "../../public/assets/icons";
+import { ArrowRight } from "../../assests/icons";
 import { useRouter } from 'next/router'
 
 const Banner = () => {
@@ -21,7 +21,7 @@ const Banner = () => {
       <div id="home" className="flex pt-36 mt-0 items-center my-14">
         <div className="max-w-[506px] pl-14 w-full">
           <h1
-            style={{ backgroundImage: "url('/assets/icons/curve.svg')" }}
+            // style={{ backgroundImage: "url('/assets/icons/curve.svg')" }}
             className="font-bold text-6xl bg-no-repeat bg-bottom leading-[70px]"
           >
             Redefining the future of Bitcoin mining through Ethereum NFTs
@@ -51,7 +51,7 @@ const Banner = () => {
         <div className="flex-1 flex items-center justify-end">
           <div
             className="bg-center relative"
-            style={{ backgroundImage: "url('./assets/pictures/pattern.png')" }}
+            style={{ backgroundImage: "url('/assets/pictures/pattern.png')" }}
           >
             <Image
               alt="landing-img"
