@@ -75,7 +75,7 @@ const RoadMap = () => {
 
           <div className="flex-1 ml-20 mt-5 flexs font-medium text-xl ">
             <div className="flex">
-              <h3>Privacy Equity & Venture Capital</h3>
+              <h3>Private Equity & Venture Capital</h3>
               <div className="mt-4">
                 <Image
                   alt="arrowrightdown"
@@ -99,7 +99,7 @@ const RoadMap = () => {
 
           <div className="flex-1 ml-20 mt-5 flexs font-medium text-xl ">
             <div className="flex">
-              <h3>White & convert funds for procurement of ASICs</h3>
+              <h3>Withdraw & convert funds for procurement of ASICs</h3>
               <div className="mt-4">
                 <Image
                   alt="arrowrightdown"
@@ -184,7 +184,7 @@ const RoadMap = () => {
               </div>
             </div>
             <div className="flex ml-80">
-              <h3>Award winniers of launchpad</h3>
+              <h3>Award winners of launchpad</h3>
               <div className="mt-4">
                 <Image
                   alt="arrowrightdown"

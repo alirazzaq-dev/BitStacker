@@ -72,7 +72,11 @@ const PayoutCycle = () => {
                 </div>
                 <div className="flex items-center">
                   <Tick />
-                  <p className="ml-2">Collect BTC wallets address on Discord</p>
+                  <p className="ml-2">Review withdrawal requests</p>
+                </div>
+                <div className="flex items-center">
+                  <Tick />
+                  <p className="ml-2">Verify BTC wallet addresses & notify users via email</p>
                 </div>
               </div>
             </div>

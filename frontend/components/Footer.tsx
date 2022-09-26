@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Discord } from "../assests/icons";
+
 const FooterItems = [
   {
     text: "Home",
@@ -30,6 +30,7 @@ const FooterItems = [
     href: "#payoutcycle",
   },
 ];
+
 const Footer = () => {
   return (
     <div className="flex flex-col justify-center items-center">
@@ -46,34 +47,47 @@ const Footer = () => {
 
       <div className="flex items-center">
         <div className="mx-2">
-          <Image
-            alt="twitter"
-            width={36}
-            height={29}
-            src={"/assets/icons/twitter.svg"}
-          />
+          <a href="https://twitter.com/bitstacker_NFT" target="blank">
+            <Image
+              alt="twitter"
+              width={36}
+              height={29}
+              src={"/assets/icons/twitter.svg"}
+            />
+          </a>
         </div>
 
         <div className="mx-2">
-          <Image
-            alt="linkedIn"
-            width={31}
-            height={30}
-            src={"/assets/icons/linkedin.svg"}
-          />
+          <a href=" https://www.linkedin.com/company/blockchainlabs-global/" target="blank">
+            <Image
+              alt="linkedIn"
+              width={31}
+              height={30}
+              src={"/assets/icons/linkedin.svg"}
+            />
+          </a>
         </div>
 
         <div className="mx-2">
-          <Discord />
+          <a href="https://discord.com/invite/XQuPx75wKE" target="blank">
+            <Image
+              alt="discord"
+              width={32}
+              height={25}
+              src={"/assets/icons/discord.svg"}
+            />
+          </a>
         </div>
 
         <div className="mx-2">
-          <Image
-            alt="medium"
-            width={32}
-            height={25}
-            src={"/assets/icons/medium.svg"}
-          />
+          <a href="https://medium.com/@bitstacker.nft" target="blank">
+            <Image
+              alt="medium"
+              width={32}
+              height={25}
+              src={"/assets/icons/medium.svg"}
+            />
+          </a>
         </div>
       </div>
 

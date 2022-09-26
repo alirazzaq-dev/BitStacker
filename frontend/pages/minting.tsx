@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import Image from "next/image";
 import { useState } from "react";
 import { Navbar, Sidebar, SmallFooter } from "../components";
@@ -16,9 +15,6 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { ValidateBitcoinAddress, ValidateEmail } from "../utils/helpers";
 import { promiseNotify, successNotify } from "../utils/toasts";
 import { getLoader } from "../utils/helpers";
-
-
-// import {image0, image1, image2, image3} from "../public/assets/images";
 
 import image0 from "../public/assets/images/0.png";
 import image1 from "../public/assets/images/1.png";
