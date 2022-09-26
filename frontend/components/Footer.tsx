@@ -50,9 +50,9 @@ const Footer = () => {
           <a href="https://twitter.com/bitstacker_NFT" target="blank">
             <Image
               alt="twitter"
-              width={36}
-              height={29}
-              src={"/assets/icons/twitter.svg"}
+              width={32}
+              height={25}
+              src="/assets/icons/twitter.svg"
             />
           </a>
         </div>
@@ -61,9 +61,9 @@ const Footer = () => {
           <a href=" https://www.linkedin.com/company/blockchainlabs-global/" target="blank">
             <Image
               alt="linkedIn"
-              width={31}
-              height={30}
-              src={"/assets/icons/linkedin.svg"}
+              width={32}
+              height={25}
+              src="/assets/icons/linkedin.svg"
             />
           </a>
         </div>
@@ -74,7 +74,7 @@ const Footer = () => {
               alt="discord"
               width={32}
               height={25}
-              src={"/assets/icons/discord.svg"}
+              src="/assets/icons/discord.svg"
             />
           </a>
         </div>
@@ -85,7 +85,7 @@ const Footer = () => {
               alt="medium"
               width={32}
               height={25}
-              src={"/assets/icons/medium.svg"}
+              src="/assets/icons/discord.svg"
             />
           </a>
         </div>
