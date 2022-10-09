@@ -25,11 +25,11 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({revenue}: any) => {
+const Chart = ({ revenue }: any) => {
   // const [isDropDownOpen, setIsDropDownOpen] = useState(false);
 
   const lables = Object.keys(revenue).slice(0, 31)
-  const allValues = Object.values(revenue).slice(0, 31) 
+  const allValues = Object.values(revenue).slice(0, 31)
   const values = allValues.map((val: any) => {
     if (val !== "") {
       return val;
@@ -64,7 +64,7 @@ const Chart = ({revenue}: any) => {
     },
     maintainAspectRatio: false,
   };
-  
+
   return (
     <div className="bg-[#121212] rounded-3xl p-4">
       <div className="flex items-center justify-between">

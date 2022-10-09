@@ -169,10 +169,10 @@ const Minting = () => {
 
         const isWhiteListingActive = await contract.onlyWhiteListed();
         const isUserWhiteListed = await contract.isWhiteListed(account);
-        
-        if(isWhiteListingActive && !isUserWhiteListed){
+
+        if (isWhiteListingActive && !isUserWhiteListed) {
           alert("You are not whitelisted.")
-          throw("NOT_WHITELISTED");
+          throw ("NOT_WHITELISTED");
         }
 
         const validbitcoin = ValidateBitcoinAddress(addresses.bitcoin);
@@ -185,7 +185,7 @@ const Minting = () => {
           alert("Invalid email address");
           throw ("INVALID EMAIL")
         }
-        
+
         if (price) {
           const value = (quantity * price[selectedToken as 0 | 1 | 2 | 3]).toFixed(4);
 
@@ -196,7 +196,7 @@ const Minting = () => {
             throw ("Balance is insufficient")
           }
 
-          const tx = contract.mint( selectedToken, quantity,
+          const tx = contract.mint(selectedToken, quantity,
             {
               bitCoinAddress: addresses.bitcoin,
               emailAddress: addresses.email,
@@ -313,8 +313,8 @@ const Minting = () => {
                   defaultValue={selectedToken}
                   onChange={(e) => {
                     setSelectedToken(Number(e.target.value))
-                    
-                    switch (Number(e.target.value)){
+
+                    switch (Number(e.target.value)) {
                       case 0:
                         setImage(image0)
                         break
@@ -415,7 +415,7 @@ const Minting = () => {
                 <button
                   onClick={handleMint}
                   disabled={!active || selectedToken === TokenType.CLOSED || isMinting}
-                  style={{padding: "10px"}}
+                  style={{ padding: "10px" }}
                   className="bg-transparent text-[#F7931B] text-base mt-2 w-full border-2 border-[#F7931B] rounded-full py-5 px-32"
                 >
                   {isMinting ? mintingLoader : "Mint"}
@@ -449,7 +449,7 @@ const Minting = () => {
                     width={800}
                     height={500}
                     alt="minting-banner"
-                    src={ image }
+                    src={image}
                   />
                 </div>
               </div>
@@ -458,16 +458,16 @@ const Minting = () => {
         </div>
         <SmallFooter />
 
-        {/* 
-          <div style={{ margin: 10 }}>
-            <div>For Testing</div>
-            <div style={{ height: "10vh", border: "1px solid white", display: "flex", justifyContent: "space-around" }}>
-              <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
-              <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
-              <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
-            </div>
-          </div>  
-        */}
+
+        <div style={{ margin: 10 }}>
+          <div>For Testing</div>
+          <div style={{ height: "10vh", border: "1px solid white", display: "flex", justifyContent: "space-around" }}>
+            <button onClick={() => handleType(SaleType.CLOSED)}> Closed </button>
+            <button onClick={() => handleType(SaleType.PRIVATE)}> Private </button>
+            <button onClick={() => handleType(SaleType.PUBLIC)}> Public </button>
+          </div>
+        </div>
+
 
 
       </div>

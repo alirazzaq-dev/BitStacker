@@ -85,8 +85,8 @@ const Footer = () => {
               alt="medium"
               width={32}
               height={25}
-              src="/assets/medium.svg"     
-              />
+              src="/assets/medium.svg"
+            />
           </a>
         </div>
       </div>

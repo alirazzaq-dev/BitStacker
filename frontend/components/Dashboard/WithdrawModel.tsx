@@ -23,7 +23,7 @@ const WithdrawModel = (
     const handleWithdraw = async (e: MouseEvent<HTMLElement>) => {
         e.preventDefault();
 
-        try{
+        try {
             setSending(true)
             const userData = {
                 availableBalance,
@@ -32,19 +32,20 @@ const WithdrawModel = (
                 emailAddress: contactInfo.emailAddress
             }
             const tx = axios.post("/api/sendEmail", { userData: userData });
-            // console.log("text: ", res.data.text);
             const res = await promiseNotify(
                 tx,
                 "Request initiated",
                 "Successfully requested",
                 "Error"
             );
-           
+            await res.wait(1);
+            successNotify("Success");
+
             setSending(false);
             setShowWithdrawModal(false);
-    
+
         }
-        catch(e){
+        catch (e) {
             console.error(e);
             setSending(false)
             errorNotify("Request Unsuccessful");
@@ -52,7 +53,7 @@ const WithdrawModel = (
         }
 
     }
-    
+
 
     return (
         <div className="fixed top-0 left-0 bg-[#121212] bg-opacity-40 w-full h-full flex items-center justify-center ">
@@ -62,7 +63,7 @@ const WithdrawModel = (
                         Withdraw <span className="text-[#F7931B]">Bitcoin</span>
                     </h1>
 
-                    <div onClick={() => { setShowWithdrawModal(false);}}
+                    <div onClick={() => { setShowWithdrawModal(false); }}
                         className="bg-[#FF5B5B] cursor-pointer bg-opacity-5 rounded-full w-10 h-10 flex items-center justify-center">
                         <Corss />
                     </div>
@@ -70,7 +71,7 @@ const WithdrawModel = (
 
                 <form className="flex flex-col items-center mt-5">
                     <div className="w-full relative border border-[#595959] rounded-[50px] py-4 px-6 my-1">
-                        <input className="w-full bg-transparent outline-none font-medium text-lg" value={availableBalance + " BTC"}/>
+                        <input className="w-full bg-transparent outline-none font-medium text-lg" value={availableBalance + " BTC"} />
                         <p className="absolute -top-4 left-7  font-light text-base px-1 bg-[#121212]">
                             <span className="opacity-50">Amount</span>
                         </p>
@@ -102,7 +103,7 @@ const WithdrawModel = (
                         </p>
                     </div>
                     <button onClick={handleWithdraw} className="bg-[#F7931B] py-4 mt-8 font-bold text-2xl px-20 rounded-[50px]">
-                        {sending ? "Submitting..." : "Submit" }
+                        {sending ? "Submitting..." : "Submit"}
                     </button>
                 </form>
             </div>

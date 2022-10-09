@@ -124,10 +124,7 @@ const Details = () => {
     try {
       const res = await axios.post("/api/getUserInfo", { address: account });
       const data: any = res.data[0] as Object;
-      // setRevenue(data);
-      setRevenue({...data, availableBalance: Number(data.totalReward ?? 0) - Number(data.redeemedReward ?? 0)})
-       
-      // console.log("data", data)
+      setRevenue({ ...data, availableBalance: Number(data.totalReward ?? 0) - Number(data.redeemedReward ?? 0) })
     }
     catch (e) {
       console.error(e);
@@ -205,7 +202,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl">Total BTC Earned</h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    { revenue.totalReward ?? 0 }
+                    {revenue.totalReward ?? 0}
                   </p>
                 </div>
                 <ChartIcon />
@@ -220,7 +217,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl"> Redeemed </h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    { revenue.redeemedReward ?? 0 }
+                    {revenue.redeemedReward ?? 0}
                   </p>
                 </div>
                 <ChartIcon />
@@ -236,7 +233,7 @@ const Details = () => {
               <div className="ml-5">
                 <h2 className="font-medium text-xl">Total hashpower</h2>
                 <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                  { hashes?.total } Terrahash
+                  {hashes?.total} Terrahash
                 </p>
               </div>
             </div>
@@ -248,7 +245,7 @@ const Details = () => {
                 <div>
                   <h2 className="font-medium text-xl">Available Balance</h2>
                   <p className="opacity-50 font-lighter text-2xl leading-[36px]">
-                    { revenue.availableBalance }
+                    {revenue.availableBalance}
                   </p>
                 </div>
 
@@ -269,19 +266,19 @@ const Details = () => {
 
         {
           showUpdateModal && (
-            <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} contactInfo={contactInfo}/>
+            <UpdateModel setShowUpdateModal={setShowUpdateModal} setContactInfo={setContactInfo} contactInfo={contactInfo} />
           )
         }
 
         {
           showWithDrawModal && (
-            <WithdrawModel userAddress={account!} setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo} availableBalance= {revenue.availableBalance} />
+            <WithdrawModel userAddress={account!} setShowWithdrawModal={setShowWithdrawModal} contactInfo={contactInfo} availableBalance={revenue.availableBalance} />
           )
         }
 
       </div>
 
-      <Chart  revenue= {revenue}/>
+      <Chart revenue={revenue} />
 
     </>
   );

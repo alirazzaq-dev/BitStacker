@@ -3,7 +3,7 @@ pragma solidity 0.8.9;
 
 
 /// @title	Bitstaker NFTs. 
-/// @author	Ali (alirazzaquet@mail.com)
+/// @author	Ali (alirazzaquet@gmail.com)
 
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";

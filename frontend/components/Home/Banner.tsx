@@ -12,7 +12,7 @@ const Banner = () => {
     else if (r === "minting") {
       router.push("minting");
     }
-  } 
+  }
 
 
 
@@ -33,13 +33,13 @@ const Banner = () => {
           <div className="flex items-center  mt-14">
 
             <button
-              onClick={() => handleRoute("dashboard")} 
+              onClick={() => handleRoute("dashboard")}
               className="rounded-lg bg-[#F7931A] font-medium text-xl py-3 px-7">
               Dashboard
             </button>
-            <button 
-              
-              onClick={() => handleRoute("minting")} 
+            <button
+
+              onClick={() => handleRoute("minting")}
               className="rounded-lg flex items-center  font-normal text-xl py-3 px-7">
               Minting
               <span>

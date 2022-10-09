@@ -90,11 +90,10 @@ const Header = () => {
               onClick={() => {
                 ClickHandle(href, tabId);
               }}
-              className={`cursor-pointer duration-300 text-base ${
-                activeTabId === tabId
+              className={`cursor-pointer duration-300 text-base ${activeTabId === tabId
                   ? " text-[#F7931A] font-semibold"
                   : " text-[#fff] font-normal"
-              } `}
+                } `}
             >
               {text}
             </h2>

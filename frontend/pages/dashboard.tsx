@@ -27,7 +27,7 @@ const Dashboard = (props: any) => {
 
               {active && (
                 <>
-                  <Details/>
+                  <Details />
                 </>
               )}
 

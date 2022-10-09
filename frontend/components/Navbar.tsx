@@ -5,6 +5,7 @@ import { InjectedConnector } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
 import { Bell, Close, Etherum } from "../assests/icons";
 import contractData from "../utils/contractAddresses.json"
+import { NetworkName } from "../utils/helpers";
 
 const injected = new InjectedConnector({
   supportedChainIds: [1, 3, 4, 5, 42, 31337],
@@ -41,7 +42,6 @@ const Navbar = () => {
   const connect = async () => {
     if (typeof window.ethereum !== "undefined") {
       try {
-        // setHasMetamask(true);
         await activate(injected);
       } catch (e) {
         console.log(e);
@@ -54,19 +54,29 @@ const Navbar = () => {
   const [balance, setBalance] = useState("0.0000");
   const fetchEthBalance = async () => {
     if (provider && account) {
-      const balanceWei = await provider.getBalance(account);
-      const balanceEths = ethers.utils.formatEther(balanceWei);
-      setBalance(Number(balanceEths).toFixed(4));
+      try {
+        const balanceWei = await provider.getBalance(account);
+        const balanceEths = ethers.utils.formatEther(balanceWei);
+        setBalance(Number(balanceEths).toFixed(4));
+      }
+      catch (e) {
+        console.log(e);
+      }
     }
   };
 
   const checkNetwork = async () => {
     if (chainId && chainId !== contractData.chainId) {
+      const currentNetwork = NetworkName.hasOwnProperty(chainId) ? NetworkName[chainId] : chainId;
+      const toNetwork = NetworkName.hasOwnProperty(contractData.chainId) ? NetworkName[contractData.chainId] : chainId;
       const input = confirm(
-        `Allow us to change your network Id from ${chainId} to ${contractData.chainId}`
+        `Allow us to change your network from ${currentNetwork} to ${toNetwork}`
       );
       if (input) {
         handleNetworkChange();
+      }
+      else {
+        throw ("Network Error")
       }
     }
   };
