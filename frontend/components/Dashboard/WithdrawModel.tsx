@@ -32,14 +32,12 @@ const WithdrawModel = (
                 emailAddress: contactInfo.emailAddress
             }
             const tx = axios.post("/api/sendEmail", { userData: userData });
-            const res = await promiseNotify(
+            await promiseNotify(
                 tx,
                 "Request initiated",
                 "Successfully requested",
                 "Error"
             );
-            await res.wait(1);
-            successNotify("Success");
 
             setSending(false);
             setShowWithdrawModal(false);
